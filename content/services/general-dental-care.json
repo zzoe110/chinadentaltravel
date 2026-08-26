@@ -1,0 +1,24 @@
+{
+  "slug": "general-dental-care",
+  "name": "General Dental Care",
+  "nameZh": "口腔护理",
+  "priority": "P1",
+  "tagline": "Routine check-ups, cleaning & restorative care",
+  "summary": "Comprehensive oral health services — from thorough examinations and scaling to fillings, root canals and extractions — delivered with gentle, modern techniques.",
+  "image": null,
+  "priceFrom": 50,
+  "priceTo": 300,
+  "priceUnit": "per visit",
+  "duration": "Same-day appointments available",
+  "includes": [
+    "Full oral examination and charting",
+    "Professional scaling and polishing",
+    "Digital X-rays where needed",
+    "Fillings, root canal or extraction as required",
+    "Personalised oral hygiene plan"
+  ],
+  "faq": [
+    { "q": "Can I get a cleaning without treatment?", "a": "Yes. A routine check-up and clean is one of our most popular single-visit services for travellers." },
+    { "q": "Do you accept dental emergencies?", "a": "Partner clinics offer priority slots for international patients with urgent needs." }
+  ]
+}

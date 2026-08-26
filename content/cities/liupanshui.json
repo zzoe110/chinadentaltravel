@@ -1,0 +1,49 @@
+{
+  "slug": "liupanshui",
+  "name": "Liupanshui, Guizhou",
+  "nameZh": "贵州·六盘水",
+  "region": "Guizhou Province",
+  "tagline": "China's Cool Capital — A 19°C Summer Escape",
+  "heroImage": null,
+  "featured": false,
+  "intro": "Known as 'China's Cool Capital' for its year-round comfortable climate (summer averages just 19°C), Liupanshui offers the vast Wumeng grassland, alpine skiing in winter and golden ginkgo villages in autumn. Cool air makes for an especially pleasant recovery.",
+  "tourism": {
+    "highlights": [
+      { "name": "Wumeng Grassland (乌蒙大草原)", "description": "Rolling alpine meadows with wind turbines, sea-of-clouds sunrises and grazing herds — a Tibetan-plateau feel in Guizhou.", "image": null },
+      { "name": "Alpine Ski Resort", "description": "One of southern China's rare ski areas — hit the slopes in winter without the cold of the north.", "image": null },
+      { "name": "Tuole Ancient Ginkgo Village", "description": "In late autumn, 1,200 ancient ginkgo trees turn a golden sea — a surreal, photogenic wonder.", "image": null },
+      { "name": "Cool-Climate Living", "description": "Year-round mild weather — ideal if you prefer healing in comfort, not humidity.", "image": null }
+    ],
+    "itinerary": [
+      { "day": "Day 1", "title": "Arrive in Liupanshui", "description": "Transfer in; enjoy the cool evening." },
+      { "day": "Day 2", "title": "Treatment & Rest", "description": "Consultation and first session; rest in cool comfort." },
+      { "day": "Day 3", "title": "Wumeng Grassland", "description": "Full day on the alpine meadows; sunrise optional." },
+      { "day": "Day 4", "title": "Ginkgo or Ski (by season)", "description": "Seasonal highlight day; gentle pace." },
+      { "day": "Day 5", "title": "Follow-up & Departure", "description": "Final check and transfer." }
+    ]
+  },
+  "medical": {
+    "advantages": "Liupanshui's partner clinic provides the group's care standards in the most climate-comfortable city in Guizhou — a smart choice for summer travellers."
+  },
+  "prices": {
+    "dental-implants": { "from": 800, "to": 1700 },
+    "general-dental-care": { "from": 50, "to": 180 },
+    "teeth-whitening": { "from": 150, "to": 280 }
+  },
+  "institutions": [
+    {
+      "name": "Jingzhou Dental — Liupanshui Clinic",
+      "nameZh": "京州口腔（六盘水院区）",
+      "address": "Liupanshui City, Guizhou Province, China",
+      "addressZh": "中国贵州省六盘水市",
+      "phone": "+86 858 0000 0000",
+      "email": "liupanshui@jingzhou.dental",
+      "website": "https://chinadentaltravel.com",
+      "description": "A cool-climate clinic serving travellers who want treatment with a breath of fresh mountain air.",
+      "image": null,
+      "doctors": [
+        { "name": "Dr. He Tao", "nameZh": "何涛 医生", "title": "Implant & General Dentist", "specialty": "Implants, restorative", "bio": "Combines surgical precision with a calm, patient-first approach.", "languages": "Mandarin, English", "image": null }
+      ]
+    }
+  ]
+}

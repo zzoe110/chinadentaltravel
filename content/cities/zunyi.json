@@ -1,0 +1,49 @@
+{
+  "slug": "zunyi",
+  "name": "Zunyi, Guizhou",
+  "nameZh": "贵州·遵义",
+  "region": "Guizhou Province",
+  "tagline": "Home of Moutai & Red Cliff Wonders",
+  "heroImage": null,
+  "featured": false,
+  "intro": "Famous for the town that distils the world's most prized baijiu (Moutai) and for the crimson sandstone peaks of Chishui Danxia, Zunyi pairs a rich revolutionary history with dramatic natural scenery. A refined, relaxed base for treatment and touring.",
+  "tourism": {
+    "highlights": [
+      { "name": "Moutai Town (茅台镇)", "description": "The birthplace of China's iconic spirit — riverside distilleries, aroma in the air, and a fascinating liquor culture museum.", "image": null },
+      { "name": "Chishui Danxia (赤水丹霞)", "description": "UNESCO-listed red sandstone landforms, waterfalls and primeval forest — a photographer's dream.", "image": null },
+      { "name": "Wujiangzhai (乌江寨)", "description": "A restored riverside village of lit bridges, paddle boats and evening performances — serene and romantic.", "image": null },
+      { "name": "Revolutionary History Sites", "description": "Zunyi Meeting Site and related memorials tell a pivotal chapter of modern China.", "image": null }
+    ],
+    "itinerary": [
+      { "day": "Day 1", "title": "Arrive in Zunyi", "description": "Settle in; light evening walk." },
+      { "day": "Day 2", "title": "Treatment & Rest", "description": "Consultation and first session; rest." },
+      { "day": "Day 3", "title": "Wujiangzhai Village", "description": "Half-day at the scenic riverside village." },
+      { "day": "Day 4", "title": "Chishui Danxia", "description": "Red-rock waterfalls and forest — easy trails." },
+      { "day": "Day 5", "title": "Follow-up & Departure", "description": "Final check and transfer." }
+    ]
+  },
+  "medical": {
+    "advantages": "Zunyi's partner clinic delivers the group's standard of care with the bonus of a slower, more affordable city. Ideal for travellers combining treatment with the Moutai trail."
+  },
+  "prices": {
+    "dental-implants": { "from": 850, "to": 1800 },
+    "general-dental-care": { "from": 50, "to": 190 },
+    "teeth-whitening": { "from": 150, "to": 290 }
+  },
+  "institutions": [
+    {
+      "name": "Jingzhou Dental — Zunyi Clinic",
+      "nameZh": "京州口腔（遵义院区）",
+      "address": "Zunyi City, Guizhou Province, China",
+      "addressZh": "中国贵州省遵义市",
+      "phone": "+86 851 0000 0000",
+      "email": "zunyi@jingzhou.dental",
+      "website": "https://chinadentaltravel.com",
+      "description": "A modern clinic in a historic city, balancing heritage tourism with dependable dental care.",
+      "image": null,
+      "doctors": [
+        { "name": "Dr. Zhao Min", "nameZh": "赵敏 医生", "title": "Cosmetic & General Dentist", "specialty": "Whitening, veneers, regular care", "bio": "Known for a reassuring chairside manner with nervous patients.", "languages": "Mandarin, English", "image": null }
+      ]
+    }
+  ]
+}

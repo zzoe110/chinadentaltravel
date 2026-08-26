@@ -1,0 +1,25 @@
+{
+  "slug": "dental-implants",
+  "name": "Dental Implants",
+  "nameZh": "牙齿种植",
+  "priority": "P0",
+  "tagline": "Permanent, natural-looking tooth replacement",
+  "summary": "Titanium or ceramic implants placed by certified oral surgeons, restoring both function and confidence with results built to last decades.",
+  "image": null,
+  "priceFrom": 800,
+  "priceTo": 2500,
+  "priceUnit": "per implant",
+  "duration": "Typically 1–2 visits over 3–6 months (same-day assessment available)",
+  "includes": [
+    "3D CBCT scan and digital treatment planning",
+    "Surgical placement of implant fixture",
+    "Premium abutment and ceramic crown",
+    "Local anaesthesia and post-op care kit",
+    "Follow-up consultation and aftercare guide"
+  ],
+  "faq": [
+    { "q": "How long does an implant take?", "a": "The implant fixture is placed in one visit; the crown is fitted after 3–6 months of healing. Many patients split this across two trips." },
+    { "q": "Is the procedure painful?", "a": "It is performed under local anaesthesia. Most patients report only mild discomfort, managed with standard pain relief." },
+    { "q": "What brands of implants are used?", "a": "Partner clinics use internationally recognised systems (e.g. Nobel Biocare, Straumann, Osstem) — specified in your treatment plan." }
+  ]
+}

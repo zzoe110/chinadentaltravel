@@ -1,0 +1,23 @@
+{
+  "slug": "teeth-whitening",
+  "name": "Teeth Whitening",
+  "nameZh": "牙齿美白",
+  "priority": "P1",
+  "tagline": "A brighter smile in a single session",
+  "summary": "Professional in-clinic whitening using safe, clinically proven systems that lift stains and brighten your smile — perfect before a big event or trip home.",
+  "image": null,
+  "priceFrom": 150,
+  "priceTo": 400,
+  "priceUnit": "per treatment",
+  "duration": "About 60–90 minutes, same day",
+  "includes": [
+    "Shade assessment and gum protection",
+    "Professional-grade bleaching system",
+    "Take-home maintenance guidance",
+    "Optional custom whitening trays"
+  ],
+  "faq": [
+    { "q": "How white will my teeth get?", "a": "Results vary by baseline shade and lifestyle, but most patients see several shades of improvement after one session." },
+    { "q": "Is it safe for sensitive teeth?", "a": "Clinics use desensitising agents and adjust strength to your comfort. Tell your dentist about any sensitivity first." }
+  ]
+}

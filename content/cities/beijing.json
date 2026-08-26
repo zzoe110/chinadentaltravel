@@ -1,0 +1,50 @@
+{
+  "slug": "beijing",
+  "name": "Beijing",
+  "nameZh": "北京",
+  "region": "Beijing Municipality",
+  "tagline": "Where Ancient History Meets Modern Dentistry",
+  "heroImage": null,
+  "featured": true,
+  "intro": "China's capital blends 3,000 years of history with world-class medical infrastructure. While you recover, walk the Great Wall, wander the Forbidden City and taste the city that invented Peking duck. Beijing is our flagship destination for international dental travellers who want culture and convenience in one trip.",
+  "tourism": {
+    "highlights": [
+      { "name": "The Forbidden City", "description": "The largest ancient wooden palace complex on Earth — 24 emperors called it home. A half-day walk through 600 years of imperial history.", "image": null },
+      { "name": "The Great Wall", "description": "No trip to China is complete without standing on this wonder. The Mutianyu section offers fewer crowds and stunning mountain views.", "image": null },
+      { "name": "Hutong & Courtyard Culture", "description": "Cycle or stroll the grey-brick alleyways, sip tea in a renovated siheyuan, and feel old Beijing's quiet rhythm.", "image": null },
+      { "name": "Peking Duck & Imperial Cuisine", "description": "Crisp-skinned roast duck carved tableside — a culinary rite of passage paired with centuries-old recipes.", "image": null }
+    ],
+    "itinerary": [
+      { "day": "Day 1", "title": "Arrive & Settle", "description": "Airport pickup, hotel check-in, light exploration of a nearby hutong." },
+      { "day": "Day 2", "title": "Consultation & First Treatment", "description": "Clinic visit, 3D scan and start of treatment. Afternoon rest." },
+      { "day": "Day 3", "title": "Forbidden City & Tiananmen", "description": "A guided morning through imperial history; gentle pace for recovery." },
+      { "day": "Day 4", "title": "Great Wall (Mutianyu)", "description": "A breathtaking half-day at the wall, cable car up and down to save energy." },
+      { "day": "Day 5", "title": "Follow-up & Departure", "description": "Final check, aftercare kit, and transfer to the airport." }
+    ]
+  },
+  "medical": {
+    "advantages": "Beijing hosts some of China's most advanced dental hospitals and private clinics, with specialists trained internationally and equipment on par with any global capital. Our partner institution here offers implantology, cosmetic and general dentistry under one roof, with English-speaking coordinators for every visit."
+  },
+  "prices": {
+    "dental-implants": { "from": 1000, "to": 2500 },
+    "general-dental-care": { "from": 60, "to": 300 },
+    "teeth-whitening": { "from": 180, "to": 400 }
+  },
+  "institutions": [
+    {
+      "name": "Jingzhou Dental — Beijing Branch",
+      "nameZh": "京州口腔（北京院区）",
+      "address": "Chaoyang District, Beijing, China",
+      "addressZh": "中国北京市朝阳区",
+      "phone": "+86 10 0000 0000",
+      "email": "beijing@jingzhou.dental",
+      "website": "https://chinadentaltravel.com",
+      "description": "A flagship urban clinic of the Jingzhou Dental Group, combining metropolitan convenience with the group's 16-year clinical heritage.",
+      "image": null,
+      "doctors": [
+        { "name": "Dr. Li Wei", "nameZh": "李伟 医生", "title": "Chief Implantologist", "specialty": "Immediate-load implants, full-mouth rehabilitation", "bio": "18 years placing implants; trained in Switzerland and Singapore. Speaks English.", "languages": "English, Mandarin", "image": null },
+        { "name": "Dr. Sarah Chen", "nameZh": "陈莎 医生", "title": "Cosmetic Dentistry Lead", "specialty": "Veneers, whitening, smile design", "bio": "Passionate about natural-looking aesthetic results for international patients.", "languages": "English, Mandarin", "image": null }
+      ]
+    }
+  ]
+}

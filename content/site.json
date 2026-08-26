@@ -1,0 +1,83 @@
+{
+  "site": {
+    "name": "China Dental Travel",
+    "nameZh": "中国口腔医疗旅游",
+    "domain": "https://chinadentaltravel.com",
+    "logoText": "China Dental Travel",
+    "tagline": "World-Class Dental Care, Unforgettable China",
+    "description": "China Dental Travel connects international patients with licensed, top-tier dental clinics across China — combining affordable, high-quality treatment with curated travel experiences in Beijing and the scenic province of Guizhou.",
+    "defaultLang": "en",
+    "organization": {
+      "name": "China Dental Travel",
+      "legalName": "China Dental Travel International Medical Tourism Platform",
+      "founderClinic": "Jingzhou Dental Group (京州口腔集团)",
+      "email": "care@chinadentaltravel.com",
+      "whatsapp": "+8613800000000",
+      "whatsappDisplay": "+86 138 0000 0000",
+      "facebook": "https://facebook.com/chinadentaltravel",
+      "phone": "+86 400-000-0000",
+      "address": "Beijing & Guizhou, China",
+      "social": {
+        "facebook": "https://facebook.com/chinadentaltravel",
+        "instagram": "https://instagram.com/chinadentaltravel",
+        "youtube": "https://youtube.com/@chinadentaltravel"
+      }
+    },
+    "contact": {
+      "whatsapp": "+8613800000000",
+      "whatsappDisplay": "+86 138 0000 0000",
+      "email": "care@chinadentaltravel.com",
+      "facebook": "https://facebook.com/chinadentaltravel",
+      "phone": "+86 400-000-0000"
+    },
+    "statsCode": "",
+    "seo": {
+      "titleSuffix": " | China Dental Travel",
+      "keywords": "dental tourism China, affordable dental implants China, teeth whitening China, medical travel Guizhou, dental vacation Beijing",
+      "ogImage": "/assets/img/og-cover.svg",
+      "twitter": "@chinadentaltravel"
+    },
+    "watermark": {
+      "text": "chinadentaltravel.com",
+      "enabled": true
+    },
+    "disclaimer": "Prices are indicative only and subject to final assessment by a licensed dentist. Treatment outcomes vary by individual. This platform is an information and referral service; all clinics are independently licensed medical institutions in China."
+  },
+  "nav": [
+    { "label": "Home", "href": "/" },
+    { "label": "Services", "href": "/services/" },
+    { "label": "Destinations", "href": "/destinations/" },
+    { "label": "Why China", "href": "/#why-china" },
+    { "label": "FAQ", "href": "/faq/" },
+    { "label": "About", "href": "/about/" },
+    { "label": "Contact", "href": "/contact/" }
+  ],
+  "whyChina": [
+    {
+      "icon": "💰",
+      "title": "Up to 60% Savings",
+      "text": "Compared with the US, UK or Australia, dental treatment in China can cost a fraction — without compromising on materials or standards."
+    },
+    {
+      "icon": "🏥",
+      "title": "Licensed & Accredited",
+      "text": "Every partner clinic holds a valid Chinese Medical Institution License and employs board-certified dentists. We verify before we list."
+    },
+    {
+      "icon": "🏞️",
+      "title": "Turn Recovery Into a Trip",
+      "text": "Heal in Guizhou's karst wonderlands or explore imperial Beijing — your treatment doubles as an unforgettable holiday."
+    },
+    {
+      "icon": "🌐",
+      "title": "English-Speaking Coordination",
+      "text": "From first message to aftercare, our bilingual team coordinates every step via WhatsApp, email and video call."
+    }
+  ],
+  "process": [
+    { "step": "01", "title": "Tell Us Your Needs", "text": "Message us on WhatsApp or email. Share your X-rays, concerns and travel dates." },
+    { "step": "02", "title": "Get a Plan & Quote", "text": "We match you with a licensed clinic and send a transparent treatment plan with price ranges." },
+    { "step": "03", "title": "Plan Your Trip", "text": "We suggest destinations, accommodation and a relaxed itinerary around your appointments." },
+    { "step": "04", "title": "Treat & Travel", "text": "Receive care from certified specialists, then enjoy China with peace of mind." }
+  ]
+}

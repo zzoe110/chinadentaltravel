@@ -1,0 +1,9 @@
+{
+  "name": "china-dental-travel",
+  "version": "1.0.0",
+  "private": true,
+  "description": "China Dental Travel - 中国口腔医疗旅游平台",
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}
