@@ -10,7 +10,9 @@ backend:
   name: github
   repo: zzoe110/chinadentaltravel
   branch: main
-  base_url: https://www.chinadentaltravel.com
+  # OAuth 中转：使用 Decap 官方推荐的 Netlify 公开中继（免自建服务，1分钟跑通）
+  # 若日后想完全自主，可改为自建 CloudFlare Worker 中继地址（我可帮你写）
+  base_url: https://api.netlify.com/auth/dynamic/client_id=Ov23liZ4KQmeU2o1YdyW
   auth_scope: repo
 
 # 全中文后台界面
