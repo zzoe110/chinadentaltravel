@@ -298,7 +298,7 @@ function buildHome() {
       "availableLanguage": ["English", "Chinese"]
     }
   };
-  return page({ title: SITE.name, description: SITE.description, body, jsonld, active: "/" });
+  return page({ title: SITE.name, description: "Affordable dental tourism in China: implants, whitening and general care from licensed English-speaking dentists, paired with travel to Beijing and Guizhou.", body, jsonld, active: "/" });
 }
 
 /* ---- Services index ---- */
@@ -321,7 +321,7 @@ function buildServicesIndex() {
     <p class="notice" style="margin-top:26px">Prices are indicative ranges and vary by city and individual assessment. Your final quote is confirmed by a licensed dentist before any treatment.</p>
   </div></section>
   ${ctaBand()}`;
-  return page({ title: "Dental Services", description: "Dental implants, general care and teeth whitening in China — transparent prices for international patients.", body, active: "/services/" });
+  return page({ title: "Dental Services in China", description: "Dental implants, teeth whitening and general dental care in China at transparent prices — treatment plans and costs for international patients.", body, active: "/services/" });
 }
 
 /* ---- Service detail ---- */
@@ -368,7 +368,7 @@ function buildService(s) {
     "lastReviewed": new Date().toISOString().slice(0, 10),
     "about": { "@type": "MedicalProcedure", "name": s.name }
   };
-  return page({ title: s.name + " — Dental Service", description: s.summary, body, jsonld, active: "/services/" });
+  return page({ title: s.name + " in China", description: s.summary, body, jsonld, active: "/services/" });
 }
 
 /* ---- Destinations index ---- */
@@ -398,7 +398,7 @@ function buildDestinationsIndex() {
       "name": c.name
     }))
   };
-  return page({ title: "Destinations", description: "Explore dental tourism destinations across Beijing and Guizhou, China.", body, jsonld, active: "/destinations/" });
+  return page({ title: "Dental Tourism Destinations in China", description: "Explore dental tourism destinations in China — Beijing and Guizhou (Xingyi, Kaili, Zunyi, Bijie, Liupanshui) with clinics, prices and travel guides.", body, jsonld, active: "/destinations/" });
 }
 
 /* ---- City detail ---- */
@@ -508,7 +508,7 @@ async function buildCity(c) {
       }
     ]
   };
-  return page({ title: c.name + " — Dental Tourism", description: c.intro, body, jsonld, active: "/destinations/" });
+  return page({ title: c.name + " Dental Tourism", description: c.tagline + " — licensed dental clinics and transparent treatment prices in " + c.name + ", China. Plan your dental trip with our local team.", body, jsonld, active: "/destinations/" });
 }
 
 /* ---- About ---- */
@@ -551,7 +551,7 @@ function buildAbout() {
     "description": SITE.description,
     "founder": { "@type": "Organization", "name": SITE.organization.founderClinic }
   };
-  return page({ title: "About Us", description: SITE.description, body, jsonld, active: "/about/" });
+  return page({ title: "About Us — Dental Tourism in China", description: "China Dental Travel connects international patients with licensed dental clinics in China — affordable treatment, verified clinics, and travel coordination.", body, jsonld, active: "/about/" });
 }
 
 /* ---- Contact ---- */
@@ -610,7 +610,7 @@ function buildContact() {
       "availableLanguage": ["English", "Chinese"]
     }
   };
-  return page({ title: "Contact Us", description: "Reach China Dental Travel on WhatsApp, email or Facebook. We reply within 24 hours.", body, jsonld, active: "/contact/" });
+  return page({ title: "Contact Us — Dental Treatment in China", description: "Contact China Dental Travel on WhatsApp or email — free treatment plans and price quotes for dental care in China within 24 hours.", body, jsonld, active: "/contact/" });
 }
 
 /* ---- FAQ ---- */
@@ -636,7 +636,7 @@ function buildFaq() {
       "acceptedAnswer": { "@type": "Answer", "text": f.a }
     }))
   };
-  return page({ title: "FAQ", description: "Common questions about dental tourism in China: safety, savings, visas, aftercare and pricing.", body, jsonld, active: "/faq/" });
+  return page({ title: "FAQ — Dental Tourism in China", description: "Dental tourism in China FAQ: safety, savings, visas, aftercare, treatment quality and pricing — answered for international patients.", body, jsonld, active: "/faq/" });
 }
 
 /* ================= BUILD ================= */
