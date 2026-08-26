@@ -39,6 +39,7 @@ collections:
       - name: "settings"
         label: "网站全局设置"
         file: "content/site.json"
+        format: "json"
         fields:
           - name: "name"
             label: "网站名称(英文)"
@@ -436,6 +437,7 @@ collections:
       - name: "faq"
         label: "FAQ 列表"
         file: "content/faq.json"
+        format: "json"
         fields:
           - name: "items"
             label: "问答条目"
