@@ -418,22 +418,16 @@ async function buildCity(c) {
         ${media(doc.image, doc.name, "", { key: "doc-" + c.slug + "-" + ii + "-" + j })}
         <div>
           <h5>${esc(doc.name)}</h5>
-          <div class="role">${esc(doc.title)}</div>
-          <div class="bio">${esc(doc.specialty)} · ${esc(doc.languages)}<br>${esc(doc.bio)}</div>
+          <div class="role">${esc(doc.nameZh || "")}</div>
         </div>
       </div>`).join("");
     const instMedia = media(inst.image, inst.name, "", { key: "inst-" + c.slug + "-" + ii });
     return `
     <div class="institution">
-      <div class="head"><h4>${esc(inst.name)}</h4><div class="addr">${esc(inst.address)}</div></div>
+      <div class="head"><h4>${esc(inst.name)} <span style="font-weight:400;font-size:.9rem;color:var(--muted)">${esc(inst.nameZh || "")}</span></h4></div>
       <div class="body">
         <div>
           ${instMedia}
-          <p class="desc" style="margin-top:14px">${esc(inst.description)}</p>
-          <p style="font-size:14px">
-            📞 <a href="tel:${esc(inst.phone)}">${esc(inst.phone)}</a><br>
-            ✉️ <a href="mailto:${esc(inst.email)}">${esc(inst.email)}</a>
-          </p>
         </div>
         <div>
           <h5 style="margin:0 0 10px">Medical team</h5>
@@ -491,11 +485,7 @@ async function buildCity(c) {
 
   const localBiz = c.institutions.map((inst) => ({
     "@type": "MedicalOrganization",
-    "name": inst.name,
-    "address": { "@type": "PostalAddress", "streetAddress": inst.address, "addressCountry": "CN" },
-    "telephone": inst.phone,
-    "email": inst.email,
-    "url": inst.website
+    "name": inst.name
   }));
   const jsonld = {
     "@context": "https://schema.org",

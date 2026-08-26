@@ -9,40 +9,83 @@
   "intro": "Gateway to the Miao and Dong ethnic heartland, Kaili is famous for the world's largest Miao village and the sour, savoury hotpot that defines Guizhou cuisine. Expect vibrant silver jewellery, lilting folk song and some of the friendliest small-city dentistry in the region.",
   "tourism": {
     "highlights": [
-      { "name": "Xijiang Qianhu Miao Village (西江千户苗寨)", "description": "The largest Miao settlement on Earth — over 1,000 stilted wooden houses cascading down a hillside, lit up at night like a galaxy.", "image": null },
-      { "name": "Miao Silver Jewellery", "description": "Watch master silversmiths hand-forge intricate heirloom pieces; a uniquely Guizhou souvenir.", "image": null },
-      { "name": "Sour Soup Fish (酸汤鱼)", "description": "Kaili is the birthplace of this tangy, fermented-chilli hotpot — a flavour you will crave forever after.", "image": null },
-      { "name": "Lusheng Festival & Folk Song", "description": "If your dates align, catch the bamboo lusheng pipes and embroidered costumes of local festivals.", "image": null }
+      {
+        "name": "Xijiang Qianhu Miao Village (西江千户苗寨)",
+        "description": "The largest Miao settlement on Earth — over 1,000 stilted wooden houses cascading down a hillside, lit up at night like a galaxy.",
+        "image": null
+      },
+      {
+        "name": "Miao Silver Jewellery",
+        "description": "Watch master silversmiths hand-forge intricate heirloom pieces; a uniquely Guizhou souvenir.",
+        "image": null
+      },
+      {
+        "name": "Sour Soup Fish (酸汤鱼)",
+        "description": "Kaili is the birthplace of this tangy, fermented-chilli hotpot — a flavour you will crave forever after.",
+        "image": null
+      },
+      {
+        "name": "Lusheng Festival & Folk Song",
+        "description": "If your dates align, catch the bamboo lusheng pipes and embroidered costumes of local festivals.",
+        "image": null
+      }
     ],
     "itinerary": [
-      { "day": "Day 1", "title": "Arrive in Kaili", "description": "Transfer in; evening stroll and local dinner." },
-      { "day": "Day 2", "title": "Treatment & Rest", "description": "Clinic consultation and first session; gentle evening." },
-      { "day": "Day 3", "title": "Xijiang Miao Village", "description": "Full day in the thousand-household village; cable car and cultural shows." },
-      { "day": "Day 4", "title": "Silver & Souvenirs", "description": "Silversmith workshops and relaxed recovery walk." },
-      { "day": "Day 5", "title": "Follow-up & Departure", "description": "Final check and transfer." }
+      {
+        "day": "Day 1",
+        "title": "Arrive in Kaili",
+        "description": "Transfer in; evening stroll and local dinner."
+      },
+      {
+        "day": "Day 2",
+        "title": "Treatment & Rest",
+        "description": "Clinic consultation and first session; gentle evening."
+      },
+      {
+        "day": "Day 3",
+        "title": "Xijiang Miao Village",
+        "description": "Full day in the thousand-household village; cable car and cultural shows."
+      },
+      {
+        "day": "Day 4",
+        "title": "Silver & Souvenirs",
+        "description": "Silversmith workshops and relaxed recovery walk."
+      },
+      {
+        "day": "Day 5",
+        "title": "Follow-up & Departure",
+        "description": "Final check and transfer."
+      }
     ]
   },
   "medical": {
     "advantages": "Kaili's partner clinic offers modern equipment in a calm, low-cost setting. It is an excellent choice for travellers who want treatment plus deep cultural immersion away from the big cities."
   },
   "prices": {
-    "dental-implants": { "from": 800, "to": 1700 },
-    "general-dental-care": { "from": 50, "to": 180 },
-    "teeth-whitening": { "from": 150, "to": 280 }
+    "dental-implants": {
+      "from": 800,
+      "to": 1700
+    },
+    "general-dental-care": {
+      "from": 50,
+      "to": 180
+    },
+    "teeth-whitening": {
+      "from": 150,
+      "to": 280
+    }
   },
   "institutions": [
     {
       "name": "Jingzhou Dental — Kaili Clinic",
       "nameZh": "京州口腔（凯里院区）",
-      "address": "Kaili City, Qiandongnan Prefecture, Guizhou, China",
-      "addressZh": "中国贵州省黔东南州凯里市",
-      "phone": "+86 855 0000 0000",
-      "email": "kaili@jingzhou.dental",
-      "website": "https://chinadentaltravel.com",
-      "description": "A welcoming clinic serving both locals and the growing stream of cultural travellers to southeast Guizhou.",
       "image": null,
       "doctors": [
-        { "name": "Dr. Wu Jun", "nameZh": "吴军 医生", "title": "General Dentist", "specialty": "Preventive care, whitening", "bio": "Friendly, detail-oriented clinician popular with first-time visitors.", "languages": "Mandarin, basic English", "image": null }
+        {
+          "name": "Dr. Wu Jun",
+          "nameZh": "吴军 医生",
+          "image": null
+        }
       ]
     }
   ]

@@ -9,40 +9,83 @@
   "intro": "Bijie is Guizhou's wild wonder — home to Zhijin Cave, one of China's most spectacular caverns, the springtime sea of colour at the Azalea Reserve, and Caohai Lake, a haven for black-necked cranes. A nature-lover's recovery retreat.",
   "tourism": {
     "highlights": [
-      { "name": "Zhijin Cave (织金洞)", "description": "Dubbed 'the king of caves in China' — vast chambers of stalactites lit like a natural cathedral.", "image": null },
-      { "name": "Baili Azalea (百里杜鹃)", "description": "In spring, 100 li (50 km) of hills blaze with wild azaleas — one of Earth's great floral displays.", "image": null },
-      { "name": "Caohai Wetland (草海)", "description": "A highland lake and crucial wintering ground for rare black-necked cranes — paradise for birdwatchers.", "image": null },
-      { "name": "Zhijin Grand Canyon", "description": "Sheer cliffs, gorges and a glass walkway for the brave.", "image": null }
+      {
+        "name": "Zhijin Cave (织金洞)",
+        "description": "Dubbed 'the king of caves in China' — vast chambers of stalactites lit like a natural cathedral.",
+        "image": null
+      },
+      {
+        "name": "Baili Azalea (百里杜鹃)",
+        "description": "In spring, 100 li (50 km) of hills blaze with wild azaleas — one of Earth's great floral displays.",
+        "image": null
+      },
+      {
+        "name": "Caohai Wetland (草海)",
+        "description": "A highland lake and crucial wintering ground for rare black-necked cranes — paradise for birdwatchers.",
+        "image": null
+      },
+      {
+        "name": "Zhijin Grand Canyon",
+        "description": "Sheer cliffs, gorges and a glass walkway for the brave.",
+        "image": null
+      }
     ],
     "itinerary": [
-      { "day": "Day 1", "title": "Arrive in Bijie", "description": "Transfer in; relaxed evening." },
-      { "day": "Day 2", "title": "Treatment & Rest", "description": "Consultation and first session; rest." },
-      { "day": "Day 3", "title": "Zhijin Cave", "description": "Half-day underground wonder; comfortable walking." },
-      { "day": "Day 4", "title": "Caohai Lake", "description": "Birdwatching and lakeside calm." },
-      { "day": "Day 5", "title": "Follow-up & Departure", "description": "Final check and transfer." }
+      {
+        "day": "Day 1",
+        "title": "Arrive in Bijie",
+        "description": "Transfer in; relaxed evening."
+      },
+      {
+        "day": "Day 2",
+        "title": "Treatment & Rest",
+        "description": "Consultation and first session; rest."
+      },
+      {
+        "day": "Day 3",
+        "title": "Zhijin Cave",
+        "description": "Half-day underground wonder; comfortable walking."
+      },
+      {
+        "day": "Day 4",
+        "title": "Caohai Lake",
+        "description": "Birdwatching and lakeside calm."
+      },
+      {
+        "day": "Day 5",
+        "title": "Follow-up & Departure",
+        "description": "Final check and transfer."
+      }
     ]
   },
   "medical": {
     "advantages": "Bijie's partner clinic offers the group's clinical standards in a tranquil, low-cost setting surrounded by nature — perfect for a restful recovery."
   },
   "prices": {
-    "dental-implants": { "from": 800, "to": 1700 },
-    "general-dental-care": { "from": 50, "to": 180 },
-    "teeth-whitening": { "from": 150, "to": 280 }
+    "dental-implants": {
+      "from": 800,
+      "to": 1700
+    },
+    "general-dental-care": {
+      "from": 50,
+      "to": 180
+    },
+    "teeth-whitening": {
+      "from": 150,
+      "to": 280
+    }
   },
   "institutions": [
     {
       "name": "Jingzhou Dental — Bijie Clinic",
       "nameZh": "京州口腔（毕节院区）",
-      "address": "Bijie City, Guizhou Province, China",
-      "addressZh": "中国贵州省毕节市",
-      "phone": "+86 857 0000 0000",
-      "email": "bijie@jingzhou.dental",
-      "website": "https://chinadentaltravel.com",
-      "description": "A community clinic bringing trusted dental care to northwest Guizhou's nature seekers.",
       "image": null,
       "doctors": [
-        { "name": "Dr. Sun Lei", "nameZh": "孙磊 医生", "title": "General Dentist", "specialty": "Crowns, bridges, general care", "bio": "Steady, experienced clinician focused on long-term oral health.", "languages": "Mandarin, basic English", "image": null }
+        {
+          "name": "Dr. Sun Lei",
+          "nameZh": "孙磊 医生",
+          "image": null
+        }
       ]
     }
   ]

@@ -9,41 +9,88 @@
   "intro": "The hometown of our founder and the heart of the Jingzhou Dental Group. Xingyi sits inside a sea of cone-shaped karst peaks — the Wanfenglin ('Forest of Ten Thousand Peaks') that astonished the explorer Xu Xiake. Cool air, slow living and astonishing scenery make it an ideal place to heal after treatment.",
   "tourism": {
     "highlights": [
-      { "name": "Wanfenglin (万峰林)", "description": "A 5A-rated landscape of thousands of green karst peaks, best seen by bike or hot-air balloon at sunrise.", "image": null },
-      { "name": "Maling River Gorge (马岭河峡谷)", "description": "Called 'the most beautiful scar on Earth' — a canyon threaded with hundreds of waterfalls. Boardwalks bring you right to the mist.", "image": null },
-      { "name": "Bouyei Ethnic Villages", "description": "Visit traditional Bouyei communities, try hand-dyed textiles and savour sour-soup fish by the river.", "image": null },
-      { "name": "Hua Jiang Canyon Bridge (花江峡谷大桥)", "description": "One of the world's highest bridges — a jaw-dropping feat of engineering spanning a deep canyon, a new must-see near Xingyi.", "image": null }
+      {
+        "name": "Wanfenglin (万峰林)",
+        "description": "A 5A-rated landscape of thousands of green karst peaks, best seen by bike or hot-air balloon at sunrise.",
+        "image": null
+      },
+      {
+        "name": "Maling River Gorge (马岭河峡谷)",
+        "description": "Called 'the most beautiful scar on Earth' — a canyon threaded with hundreds of waterfalls. Boardwalks bring you right to the mist.",
+        "image": null
+      },
+      {
+        "name": "Bouyei Ethnic Villages",
+        "description": "Visit traditional Bouyei communities, try hand-dyed textiles and savour sour-soup fish by the river.",
+        "image": null
+      },
+      {
+        "name": "Hua Jiang Canyon Bridge (花江峡谷大桥)",
+        "description": "One of the world's highest bridges — a jaw-dropping feat of engineering spanning a deep canyon, a new must-see near Xingyi.",
+        "image": null
+      }
     ],
     "itinerary": [
-      { "day": "Day 1", "title": "Arrive in Xingyi", "description": "Transfer from Guiyang or Xingyi airport; relaxed evening." },
-      { "day": "Day 2", "title": "Consultation & Treatment", "description": "Clinic visit and start of treatment; afternoon rest at the hotel." },
-      { "day": "Day 3", "title": "Wanfenglin Cycling", "description": "Easy bike ride through the peak forest with photo stops." },
-      { "day": "Day 4", "title": "Maling Gorge Waterfalls", "description": "Canyon walk among the falls — gentle and restorative." },
-      { "day": "Day 5", "title": "Hua Jiang Bridge & Departure", "description": "See the bridge, final check-up, transfer out." }
+      {
+        "day": "Day 1",
+        "title": "Arrive in Xingyi",
+        "description": "Transfer from Guiyang or Xingyi airport; relaxed evening."
+      },
+      {
+        "day": "Day 2",
+        "title": "Consultation & Treatment",
+        "description": "Clinic visit and start of treatment; afternoon rest at the hotel."
+      },
+      {
+        "day": "Day 3",
+        "title": "Wanfenglin Cycling",
+        "description": "Easy bike ride through the peak forest with photo stops."
+      },
+      {
+        "day": "Day 4",
+        "title": "Maling Gorge Waterfalls",
+        "description": "Canyon walk among the falls — gentle and restorative."
+      },
+      {
+        "day": "Day 5",
+        "title": "Hua Jiang Bridge & Departure",
+        "description": "See the bridge, final check-up, transfer out."
+      }
     ]
   },
   "medical": {
     "advantages": "Xingyi is where the Jingzhou Dental Group began. The clinic pairs provincial-leading equipment with the warmth of a community practice. Lower operating costs mean excellent value, while the serene surroundings support a calm recovery."
   },
   "prices": {
-    "dental-implants": { "from": 800, "to": 1800 },
-    "general-dental-care": { "from": 50, "to": 200 },
-    "teeth-whitening": { "from": 150, "to": 300 }
+    "dental-implants": {
+      "from": 800,
+      "to": 1800
+    },
+    "general-dental-care": {
+      "from": 50,
+      "to": 200
+    },
+    "teeth-whitening": {
+      "from": 150,
+      "to": 300
+    }
   },
   "institutions": [
     {
       "name": "Jingzhou Dental — Xingyi Main Clinic",
       "nameZh": "京州口腔（兴义总院）",
-      "address": "Xingyi City, Qianxinan Prefecture, Guizhou, China",
-      "addressZh": "中国贵州省黔西南州兴义市",
-      "phone": "+86 859 0000 0000",
-      "email": "xingyi@jingzhou.dental",
-      "website": "https://chinadentaltravel.com",
-      "description": "The founding clinic of the group — 16 years of trusted care in the heart of karst country.",
       "image": null,
       "doctors": [
-        { "name": "Dr. Wang Fang", "nameZh": "王芳 医生", "title": "General & Restorative Dentist", "specialty": "Fillings, crowns, root canal", "bio": "A beloved local clinician with 14 years of experience and a gentle touch.", "languages": "Mandarin, basic English", "image": null },
-        { "name": "Dr. Chen Hao", "nameZh": "陈浩 医生", "title": "Implant Surgeon", "specialty": "Single & multiple implants", "bio": "Trained in oral surgery; focuses on minimally invasive techniques.", "languages": "Mandarin, English", "image": null }
+        {
+          "name": "Dr. Wang Fang",
+          "nameZh": "王芳 医生",
+          "image": null
+        },
+        {
+          "name": "Dr. Chen Hao",
+          "nameZh": "陈浩 医生",
+          "image": null
+        }
       ]
     }
   ]
