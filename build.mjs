@@ -474,10 +474,12 @@ async function buildCity(c) {
   <section class="block">
     <div class="container" style="max-width:860px">
       <div class="block-title"><span class="badge">$</span><h2>Indicative price ranges</h2></div>
-      <table class="price-table">
-        <thead><tr><th>Treatment</th><th>Price range</th><th>Unit</th></tr></thead>
-        <tbody>${priceRows}</tbody>
-      </table>
+      <div class="price-table-wrap">
+        <table class="price-table">
+          <thead><tr><th>Treatment</th><th>Price range</th><th>Unit</th></tr></thead>
+          <tbody>${priceRows}</tbody>
+        </table>
+      </div>
       <p class="notice" style="margin-top:14px">Prices are indicative only and vary by individual assessment and clinic. Final quotes are confirmed by a licensed dentist.</p>
       <div style="margin-top:24px">${ctaBand().replace(/<section class="section-soft">/, '<div>').replace(/<\/section>/, '</div>')}</div>
     </div>
@@ -558,43 +560,39 @@ function buildAbout() {
 function buildContact() {
   const qr = "/assets/img/whatsapp-qr.png";
   const body = `
-  <section class="detail-hero"><div class="container">
+  <section class="detail-hero contact-hero"><div class="container">
     <h1>Contact Us</h1>
     <p class="tagline">We usually reply within 24 hours.</p>
   </div></section>
-  <section><div class="container">
+  <section class="contact-section"><div class="container">
     <div class="contact-grid">
       <div class="contact-card">
         <div class="ic">💬</div>
         <h3>WhatsApp</h3>
-        <p style="color:var(--muted);font-size:14px">Fastest way to reach us. Scan or tap.</p>
         <img class="qr protect" src="${qr}" alt="WhatsApp QR code" loading="lazy">
         <a class="btn btn-whatsapp" href="${WA_LINK}">${esc(SITE.contact.whatsappDisplay)}</a>
       </div>
       <div class="contact-card">
         <div class="ic">✉️</div>
         <h3>Email</h3>
-        <p style="color:var(--muted);font-size:14px">Send your X-rays and questions anytime.</p>
-        <div style="height:160px;display:grid;place-items:center;color:var(--blue);font-weight:700">@</div>
+        <div class="c-ico">@</div>
         <a class="big" href="mailto:${esc(SITE.contact.email)}">${esc(SITE.contact.email)}</a>
       </div>
       <div class="contact-card">
         <div class="ic">👍</div>
         <h3>Facebook</h3>
-        <p style="color:var(--muted);font-size:14px">Message us on Messenger.</p>
-        <div style="height:160px;display:grid;place-items:center;color:var(--blue);font-weight:700">f</div>
+        <div class="c-ico">f</div>
         <a class="big" href="${esc(SITE.contact.facebook)}">Message us</a>
       </div>
       <div class="contact-card">
         <div class="ic">📞</div>
         <h3>Phone</h3>
-        <p style="color:var(--muted);font-size:14px">For urgent enquiries.</p>
-        <div style="height:160px;display:grid;place-items:center;color:var(--blue);font-weight:700">☎</div>
+        <div class="c-ico">☎</div>
         <a class="big" href="tel:${esc(SITE.contact.phone)}">${esc(SITE.contact.phone)}</a>
       </div>
     </div>
-    <p class="notice" style="margin-top:26px">When you contact us, please include your country, the treatment you need, and any recent X-rays if available. This helps us match you with the right licensed clinic and prepare an accurate plan.</p>
-    <p class="disclaimer" style="margin-top:14px">${esc(SITE.disclaimer)}</p>
+    <p class="notice" style="margin-top:22px">When you contact us, please include your country, the treatment you need, and any recent X-rays if available. This helps us match you with the right licensed clinic and prepare an accurate plan.</p>
+    <p class="disclaimer" style="margin-top:12px">${esc(SITE.disclaimer)}</p>
   </div></section>`;
   const jsonld = {
     "@context": "https://schema.org",

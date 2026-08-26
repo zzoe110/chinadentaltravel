@@ -217,11 +217,18 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
 .price-table td.price { font-weight: 700; color: var(--blue-dark); }
 
 /* ---------- Contact ---------- */
-.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: start; }
-.contact-card { text-align: center; padding: 30px; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); }
-.contact-card .ic { font-size: 34px; }
-.contact-card .qr { width: 160px; height: 160px; margin: 14px auto; border: 1px solid var(--line); border-radius: 12px; }
-.contact-card a.big { font-weight: 700; font-size: 1.05rem; }
+.contact-hero { padding: 28px 0 30px; }
+.contact-hero h1 { font-size: clamp(1.8rem, 3vw, 2.4rem); margin: 0 0 6px; }
+.contact-hero .tagline { font-size: 1rem; margin: 0; }
+.contact-section { padding: 36px 0 44px; }
+.contact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; align-items: stretch; }
+.contact-card { text-align: center; padding: 22px 16px; border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: center; }
+.contact-card .ic { font-size: 28px; margin-bottom: 2px; }
+.contact-card h3 { font-size: 1.1rem; margin: 0 0 10px; }
+.contact-card .c-ico { width: 56px; height: 56px; border-radius: 50%; background: var(--blue-light); color: var(--blue); display: grid; place-items: center; font-size: 22px; font-weight: 800; margin: 6px 0 12px; }
+.contact-card .qr { width: 128px; height: 128px; margin: 8px 0 12px; border: 1px solid var(--line); border-radius: 12px; }
+.contact-card .btn { margin-top: auto; }
+.contact-card a.big { font-weight: 700; font-size: .98rem; word-break: break-all; }
 
 /* ---------- FAQ ---------- */
 .faq-item { border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
@@ -254,13 +261,22 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
 .notice { background: #fff8e6; border: 1px solid #ffe2a8; color: #8a6500; padding: 12px 16px; border-radius: 10px; font-size: 14px; }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .contact-grid { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
   .grid-3 { grid-template-columns: 1fr; }
   .grid-2 { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .contact-grid { grid-template-columns: 1fr; }
   .institution .body { grid-template-columns: 1fr; }
+  .institution .head { padding: 16px 18px; }
+  .institution .body { padding: 16px 18px; }
+  .highlight-item .media { width: 90px; height: 90px; flex-basis: 90px; }
+  .section-head { margin-bottom: 30px; }
+  .detail-hero { padding: 32px 0 36px; }
+  .block { padding: 42px 0; }
+  section { padding: 54px 0; }
 }
 @media (max-width: 680px) {
   .nav { display: none; position: absolute; top: 68px; left: 0; right: 0; background: #fff; flex-direction: column; padding: 16px 20px; border-bottom: 1px solid var(--line); gap: 14px; box-shadow: var(--shadow); }
@@ -268,9 +284,25 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
   .nav-toggle { display: block; }
   .header-cta .btn { display: none; }
   .grid-4 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-card { padding: 20px 16px; }
+  .contact-card .qr { width: 140px; height: 140px; }
+  .contact-section { padding: 30px 0 36px; }
   .footer-grid { grid-template-columns: 1fr; }
   .hero-inner { padding: 60px 0 70px; }
-  section { padding: 54px 0; }
+  section { padding: 46px 0; }
+  .block { padding: 34px 0; }
+  .detail-hero { padding: 26px 0 30px; }
+  .detail-hero h1 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+  .price-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .price-table { min-width: 420px; }
+  .highlight-item { flex-direction: column; gap: 10px; }
+  .highlight-item .media { width: 100%; height: 160px; flex-basis: auto; }
+  .itinerary li { padding-left: 48px; margin-left: 12px; }
+  .itinerary li::before { left: -17px; width: 32px; height: 32px; }
+  .doctor { flex-direction: row; align-items: center; }
+  .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
 }
 
 /* ---------- Anti-theft: disable image drag/select (text remains selectable) ---------- */
