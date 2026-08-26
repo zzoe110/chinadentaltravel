@@ -10,13 +10,16 @@ backend:
   name: github
   repo: zzoe110/chinadentaltravel
   branch: main
-  # Netlify 公开 OAuth 中继：最终授权地址 = base_url + "/" + auth_endpoint
-  # Decap 源码拼接逻辑： `${base_url}/${auth_endpoint}?provider=github&site_id=...`
-  # 因此 base_url 必须是根域名，auth_endpoint 才是 /auth/dynamic，二者不可混写。
-  # client_id 仍配在 GitHub OAuth App 的回调 URL 里（已配：.../client_id=Ov23liZ4KQmeU2o1YdyW）
-  base_url: https://api.netlify.com
-  auth_endpoint: auth/dynamic
+  # 自建 OAuth 代理（CloudFlare Pages Function，站内 /api/auth + /api/callback）
+  # 不再依赖 Netlify 中继（它对非 Netlify 托管的站点一律 404）。
+  # Decap 拼接逻辑： `${base_url}/${auth_endpoint}?provider=github&site_id=...`
+  # 最终请求本站 /api/auth → 跳 GitHub 授权 → /api/callback 换 token → 回传后台。
+  base_url: https://www.chinadentaltravel.com
+  auth_endpoint: api/auth
   auth_scope: repo
+  # GitHub OAuth App 的 Authorization callback URL 必须改为：
+  #   https://www.chinadentaltravel.com/api/callback
+  # 并在 CloudFlare Pages 项目环境变量里设置 GITHUB_CLIENT_SECRET（client_id 已写进函数）
 
 locale: zh
 
