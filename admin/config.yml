@@ -2,7 +2,7 @@
 # Decap CMS 配置（全中文后台）
 # 登录方式：用你自己的 GitHub 账号（即仓库 owner 的账号）登录即可，无独立密码。
 # 中文界面：通过 locale: zh 启用。
-# 注意：base_url 里的 client_id 必须是「GitHub OAuth App」的，不能是 GitHub App。
+# 登录用 GitHub OAuth App（非 GitHub App）；client_id 配在 OAuth App 的回调 URL 里，不在 base_url。
 # 写法约定：统一 block style，list widget 用 field:（单数），object widget 用 fields:（复数）。
 # =========================================================
 
@@ -10,7 +10,7 @@ backend:
   name: github
   repo: zzoe110/chinadentaltravel
   branch: main
-  base_url: https://api.netlify.com/auth/dynamic/client_id=Ov23liZ4KQmeU2o1YdyW
+  base_url: https://api.netlify.com/auth/dynamic
   auth_scope: repo
 
 locale: zh
