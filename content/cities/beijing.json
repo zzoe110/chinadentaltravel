@@ -12,12 +12,12 @@
       {
         "name": "The Forbidden City",
         "description": "The largest ancient wooden palace complex on Earth — 24 emperors called it home. A half-day walk through 600 years of imperial history.",
-        "image": null
+        "image": "/assets/img/hl-beijing-forbidden.jpg"
       },
       {
         "name": "The Great Wall",
         "description": "No trip to China is complete without standing on this wonder. The Mutianyu section offers fewer crowds and stunning mountain views.",
-        "image": null
+        "image": "/assets/img/hl-beijing-greatwall.jpg"
       },
       {
         "name": "Hutong & Courtyard Culture",
