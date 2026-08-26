@@ -34,7 +34,7 @@
     "text": "chinadentaltravel.com",
     "enabled": true
   },
-  "statsCode": "",
+  "statsCode": "<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-BVVDPE3NHR\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n  gtag('config', 'G-BVVDPE3NHR');\n</script>",
   "disclaimer": "Prices are indicative only and subject to final assessment by a licensed dentist. Treatment outcomes vary by individual. This platform is an information and referral service; all clinics are independently licensed medical institutions in China.",
   "nav": [
     { "label": "Home", "href": "/" },
