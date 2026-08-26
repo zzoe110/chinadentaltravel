@@ -64,7 +64,7 @@ const slugify = (s = "") => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").
 
 /* ---------- data ---------- */
 const siteData = await readJSON(path.join(CONTENT, "site.json"));
-const SITE = siteData.site;
+const SITE = siteData;
 const NAV = siteData.nav;
 const services = await readDirJSON(path.join(CONTENT, "services"));
 services.sort((a, b) => (a.priority > b.priority ? 1 : -1));

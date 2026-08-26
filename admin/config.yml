@@ -1,32 +1,26 @@
 # =========================================================
 # Decap CMS 配置（全中文后台）
-# 说明：本配置编辑的内容即网站构建所用的 JSON 文件。
-# 部署到 CloudFlare Pages + GitHub 后，后台通过 GitHub 账号登录授权提交修改。
 # 登录方式：用你自己的 GitHub 账号（即仓库 owner 的账号）登录即可，无独立密码。
-# 中文界面：通过 locale: zh 启用（见下方）。
+# 中文界面：通过 locale: zh 启用。
+# 注意：base_url 里的 client_id 必须是「GitHub OAuth App」的，不能是 GitHub App。
 # =========================================================
 
 backend:
   name: github
   repo: zzoe110/chinadentaltravel
   branch: main
-  # OAuth 中转：使用 Decap 官方推荐的 Netlify 公开中继（免自建服务，1分钟跑通）
-  # 若日后想完全自主，可改为自建 CloudFlare Worker 中继地址（我可帮你写）
+  # OAuth 中转：使用 Decap 官方推荐的 Netlify 公开中继（免自建服务）
+  # 下面的 client_id 必须来自「OAuth App」（settings/developers 创建），当前值来自 GitHub App，需替换
   base_url: https://api.netlify.com/auth/dynamic/client_id=Ov23liZ4KQmeU2o1YdyW
   auth_scope: repo
 
-# 全中文后台界面
 locale: zh
 
-# 媒体文件（图片）上传目录；水印由 CloudFlare Worker 在访问时叠加，
-# 另可参考 src 中的 bakeWatermark 在前端上传时烘焙水印。
 media_folder: "src/assets/img/uploads"
 public_folder: "/assets/img/uploads"
 
-# 发布模式：简单提交即可
 publish_mode: simple
 
-# 编辑器设置：允许切换可视化 / Markdown / HTML
 editor:
   preview: true
 
@@ -39,17 +33,73 @@ collections:
         label: "网站全局设置"
         file: "content/site.json"
         fields:
+          - { name: "name", label: "网站名称(英文)", widget: "string" }
+          - { name: "nameZh", label: "网站名称(中文)", widget: "string" }
+          - { name: "domain", label: "网站域名", widget: "string" }
+          - { name: "tagline", label: "首页主标题(Slogan)", widget: "string" }
           - { name: "description", label: "网站简介", widget: "text" }
-          - name: "contact", label: "联系方式", widget: "object", fields:
-              - { name: "whatsapp", label: "WhatsApp 号码(含国家码)", widget: "string" }
+          - name: "organization"
+            label: "机构信息"
+            widget: "object"
+            fields:
+              - { name: "name", label: "机构名", widget: "string" }
+              - { name: "founderClinic", label: "首选承接机构", widget: "string" }
+              - name: "social"
+                label: "社交媒体链接"
+                widget: "object"
+                fields:
+                  - { name: "facebook", label: "Facebook", widget: "string" }
+                  - { name: "instagram", label: "Instagram", widget: "string" }
+                  - { name: "youtube", label: "YouTube", widget: "string" }
+          - name: "contact"
+            label: "联系方式"
+            widget: "object"
+            fields:
+              - { name: "whatsapp", label: "WhatsApp号码(含国家码,无空格)", widget: "string", hint: "如 +8613800000000" }
+              - { name: "whatsappDisplay", label: "WhatsApp显示号", widget: "string" }
               - { name: "email", label: "联系邮箱", widget: "string" }
-              - { name: "phone", label: "联系电话", widget: "string" }
               - { name: "facebook", label: "Facebook 链接", widget: "string" }
-          - name: "seo", label: "SEO 设置", widget: "object", fields:
-              - { name: "keywords", label: "关键词", widget: "text" }
+              - { name: "phone", label: "联系电话", widget: "string" }
+          - name: "seo"
+            label: "SEO 设置"
+            widget: "object"
+            fields:
               - { name: "titleSuffix", label: "标题后缀", widget: "string" }
-          - { name: "statsCode", label: "统计代码(Google Analytics / GTM 等，直接粘贴)", widget: "code", default_language: "html", required: false }
+              - { name: "keywords", label: "关键词", widget: "text" }
+              - { name: "ogImage", label: "分享缩略图路径", widget: "string" }
+              - { name: "twitter", label: "Twitter 账号", widget: "string" }
+          - name: "watermark"
+            label: "图片水印"
+            widget: "object"
+            fields:
+              - { name: "text", label: "水印文字", widget: "string" }
+              - { name: "enabled", label: "是否启用", widget: "boolean" }
+          - { name: "statsCode", label: "统计代码(GA/GTM,直接粘贴)", widget: "code", default_language: "html", required: false }
           - { name: "disclaimer", label: "免责声明", widget: "text" }
+          - name: "nav"
+            label: "导航菜单"
+            widget: "list"
+            field:
+              name: "item"
+              label: "菜单项"
+              widget: "object"
+              fields:
+                - { name: "label", label: "文字", widget: "string" }
+                - { name: "href", label: "链接", widget: "string" }
+          - name: "whyChina"
+            label: "首页·为什么选中国"
+            widget: "list"
+            fields:
+              - { name: "icon", label: "图标(emoji)", widget: "string" }
+              - { name: "title", label: "标题", widget: "string" }
+              - { name: "text", label: "说明", widget: "text" }
+          - name: "process"
+            label: "首页·服务流程"
+            widget: "list"
+            fields:
+              - { name: "step", label: "步骤号", widget: "string" }
+              - { name: "title", label: "标题", widget: "string" }
+              - { name: "text", label: "说明", widget: "text" }
 
   # ---------------- 治疗项目 ----------------
   - name: "services"
@@ -70,8 +120,17 @@ collections:
       - { name: "priceUnit", label: "价格单位", widget: "string", default: "per treatment" }
       - { name: "duration", label: "疗程时长", widget: "string" }
       - { name: "image", label: "封面图(留空用占位图)", widget: "image", required: false }
-      - name: "includes", label: "服务包含", widget: "list", field: { name: "item", label: "条目", widget: "string" }
-      - name: "faq", label: "常见问题", widget: "list", fields:
+      - name: "includes"
+        label: "服务包含"
+        widget: "list"
+        field:
+          name: "item"
+          label: "条目"
+          widget: "string"
+      - name: "faq"
+        label: "常见问题"
+        widget: "list"
+        fields:
           - { name: "q", label: "问题", widget: "string" }
           - { name: "a", label: "回答", widget: "text" }
 
@@ -90,28 +149,55 @@ collections:
       - { name: "tagline", label: "城市标语", widget: "string" }
       - { name: "featured", label: "首页精选", widget: "boolean", default: false }
       - { name: "intro", label: "城市简介", widget: "text" }
-      - name: "tourism", label: "板块一·旅游目的地", widget: "object", fields:
-          - name: "highlights", label: "旅游亮点", widget: "list", fields:
+      - name: "tourism"
+        label: "板块一·旅游目的地"
+        widget: "object"
+        fields:
+          - name: "highlights"
+            label: "旅游亮点"
+            widget: "list"
+            fields:
               - { name: "name", label: "景点名", widget: "string" }
               - { name: "description", label: "描述", widget: "text" }
               - { name: "image", label: "图片", widget: "image", required: false }
-          - name: "itinerary", label: "推荐行程", widget: "list", fields:
+          - name: "itinerary"
+            label: "推荐行程"
+            widget: "list"
+            fields:
               - { name: "day", label: "天数标签", widget: "string", hint: "如 Day 1" }
               - { name: "title", label: "标题", widget: "string" }
               - { name: "description", label: "描述", widget: "text" }
-      - name: "medical", label: "板块二·医疗资源", widget: "object", fields:
+      - name: "medical"
+        label: "板块二·医疗资源"
+        widget: "object"
+        fields:
           - { name: "advantages", label: "医疗优势", widget: "text" }
-      - name: "prices", label: "价格区间(按项目)", widget: "object", fields:
-          - name: "dental-implants", label: "种植", widget: "object", fields:
+      - name: "prices"
+        label: "价格区间(按项目)"
+        widget: "object"
+        fields:
+          - name: "dental-implants"
+            label: "种植"
+            widget: "object"
+            fields:
               - { name: "from", label: "最低(USD)", widget: "number" }
               - { name: "to", label: "最高(USD)", widget: "number" }
-          - name: "general-dental-care", label: "口腔护理", widget: "object", fields:
+          - name: "general-dental-care"
+            label: "口腔护理"
+            widget: "object"
+            fields:
               - { name: "from", label: "最低(USD)", widget: "number" }
               - { name: "to", label: "最高(USD)", widget: "number" }
-          - name: "teeth-whitening", label: "美白", widget: "object", fields:
+          - name: "teeth-whitening"
+            label: "美白"
+            widget: "object"
+            fields:
               - { name: "from", label: "最低(USD)", widget: "number" }
               - { name: "to", label: "最高(USD)", widget: "number" }
-      - name: "institutions", label: "承接机构", widget: "list", fields:
+      - name: "institutions"
+        label: "承接机构"
+        widget: "list"
+        fields:
           - { name: "name", label: "机构名(英文)", widget: "string" }
           - { name: "nameZh", label: "机构名(中文)", widget: "string" }
           - { name: "address", label: "地址(英文)", widget: "string" }
@@ -121,7 +207,10 @@ collections:
           - { name: "website", label: "网站", widget: "string", required: false }
           - { name: "description", label: "机构简介", widget: "text" }
           - { name: "image", label: "机构图片", widget: "image", required: false }
-          - name: "doctors", label: "医生团队", widget: "list", fields:
+          - name: "doctors"
+            label: "医生团队"
+            widget: "list"
+            fields:
               - { name: "name", label: "医生名(英文)", widget: "string" }
               - { name: "nameZh", label: "医生名(中文)", widget: "string" }
               - { name: "title", label: "职称", widget: "string" }
@@ -138,6 +227,9 @@ collections:
         label: "FAQ 列表"
         file: "content/faq.json"
         fields:
-          - name: "items", label: "问答条目", widget: "list", fields:
+          - name: "items"
+            label: "问答条目"
+            widget: "list"
+            fields:
               - { name: "q", label: "问题", widget: "string" }
               - { name: "a", label: "回答", widget: "text" }
