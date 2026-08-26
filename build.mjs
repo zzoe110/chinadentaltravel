@@ -556,7 +556,7 @@ function buildAbout() {
 
 /* ---- Contact ---- */
 function buildContact() {
-  const qr = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(WA_LINK);
+  const qr = "/assets/img/whatsapp-qr.png";
   const body = `
   <section class="detail-hero"><div class="container">
     <h1>Contact Us</h1>
