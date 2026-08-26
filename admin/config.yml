@@ -1,14 +1,17 @@
 # =========================================================
 # Decap CMS 配置（全中文后台）
 # 说明：本配置编辑的内容即网站构建所用的 JSON 文件。
-# 部署到 CloudFlare Pages + GitHub 后，后台通过 git-gateway 提交修改。
-# 本地预览：可临时把 backend 改为 local（用浏览器 localStorage 存储）。
+# 部署到 CloudFlare Pages + GitHub 后，后台通过 GitHub 账号登录授权提交修改。
+# 登录方式：用你自己的 GitHub 账号（即仓库 owner 的账号）登录即可，无独立密码。
 # 中文界面：通过 locale: zh 启用（见下方）。
 # =========================================================
 
 backend:
-  name: git-gateway
+  name: github
+  repo: zzoe110/chinadentaltravel
   branch: main
+  base_url: https://www.chinadentaltravel.com
+  auth_endpoint: auth
 
 # 全中文后台界面
 locale: zh
