@@ -203,7 +203,7 @@ function buildHome() {
   // generate service placeholder art (pre-generated in build())
   const cityCards = featured.map((c) => `
     <a class="card city-card" href="/destinations/${c.slug}/" style="text-decoration:none;color:inherit">
-      <div class="media protect" style="height:180px"><img src="/assets/img/city-${c.slug}-hero.svg" alt="${esc(c.name)}" loading="lazy"></div>
+      <div class="media protect" style="height:180px"><img src="${c.heroImage || '/assets/img/city-' + c.slug + '-hero.svg'}" alt="${esc(c.name)}" loading="lazy"></div>
       <div class="body">
         <h3>${esc(c.name)}</h3>
         <div class="tagline">${esc(c.tagline)}</div>
@@ -375,7 +375,7 @@ function buildService(s) {
 function buildDestinationsIndex() {
   const cards = cities.map((c) => `
     <a class="card city-card" href="/destinations/${c.slug}/" style="text-decoration:none;color:inherit">
-      <div class="media protect" style="height:180px"><img src="/assets/img/city-${c.slug}-hero.svg" alt="${esc(c.name)}" loading="lazy"></div>
+      <div class="media protect" style="height:180px"><img src="${c.heroImage || '/assets/img/city-' + c.slug + '-hero.svg'}" alt="${esc(c.name)}" loading="lazy"></div>
       <div class="body">
         <h3>${esc(c.name)}</h3>
         <div class="tagline">${esc(c.tagline)}</div>
