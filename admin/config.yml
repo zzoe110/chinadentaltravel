@@ -10,7 +10,12 @@ backend:
   name: github
   repo: zzoe110/chinadentaltravel
   branch: main
-  base_url: https://api.netlify.com/auth/dynamic
+  # Netlify 公开 OAuth 中继：最终授权地址 = base_url + "/" + auth_endpoint
+  # Decap 源码拼接逻辑： `${base_url}/${auth_endpoint}?provider=github&site_id=...`
+  # 因此 base_url 必须是根域名，auth_endpoint 才是 /auth/dynamic，二者不可混写。
+  # client_id 仍配在 GitHub OAuth App 的回调 URL 里（已配：.../client_id=Ov23liZ4KQmeU2o1YdyW）
+  base_url: https://api.netlify.com
+  auth_endpoint: auth/dynamic
   auth_scope: repo
 
 locale: zh
