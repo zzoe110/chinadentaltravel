@@ -697,7 +697,7 @@ async function build() {
     ...services.map((s) => "/services/" + s.slug + "/"),
     ...cities.map((c) => "/destinations/" + c.slug + "/")];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemap.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${esc(SITE.domain)}${u}</loc><changefreq>weekly</changefreq><priority>${u === "/" ? "1.0" : "0.8"}</priority></url>`).join("\n")}
 </urlset>`;
   await writeFile(path.join(DIST, "sitemap.xml"), sitemap);
