@@ -11,7 +11,7 @@ backend:
   repo: zzoe110/chinadentaltravel
   branch: main
   base_url: https://www.chinadentaltravel.com
-  auth_endpoint: auth
+  auth_scope: repo
 
 # 全中文后台界面
 locale: zh
