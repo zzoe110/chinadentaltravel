@@ -108,7 +108,7 @@ function footer() {
     <div class="footer-grid">
       <div>
         <div class="brand" style="color:#fff"><span class="logo-mark">✚</span><span>China Dental Travel</span></div>
-        <p style="color:#cdd7e2;margin-top:12px;font-size:14px">${esc(SITE.description)}</p>
+        <p style="color:#cdd7e2;margin-top:12px;font-size:14px">${esc(SITE.tagline)} — affordable, licensed dental care paired with travel across China.</p>
       </div>
       <div><h4>Explore</h4>${explore}</div>
       <div><h4>Services</h4>${svcLinks}</div>
