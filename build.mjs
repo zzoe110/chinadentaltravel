@@ -525,6 +525,39 @@ async function buildCity(c) {
 
 /* ---- About ---- */
 function buildAbout() {
+  const team = [
+    {
+      img: "/assets/img/team/canfeng.jpg",
+      name: "Can Feng",
+      nameZh: "澯烽",
+      role: "Founder, China Dental Travel",
+      creds: ["Planning Director, Jingzhou Dental Group", "10 years in China's media & marketing industry", "6 years in China's dental industry"]
+    },
+    {
+      img: "/assets/img/team/xiefang.jpg",
+      name: "Jie Fang",
+      nameZh: "解放",
+      role: "Strategy & International Relations",
+      creds: ["B.A. in Finance, Renmin University of China, Class of 2006", "M.S. in Management & Finance, HEC Paris, Class of 2010", "Chief Strategy Officer, Beijing Jingzhou Dental Group", "CEO, Beijing Jingde Dental Group", "Founder & Director, Arcnova AI", "Director, Shanghai Qimei Orthodontics"]
+    },
+    {
+      img: "/assets/img/team/mengxiangyun.jpg",
+      name: "Meng Xiangyun",
+      nameZh: "孟祥云",
+      role: "Clinical Operations & Patient Experience",
+      creds: ["Founder & CEO, YiYi Medical Management", "Senior National Psychological Counselor (China)", "National Oral Health Manager — Intermediate (China)", "Formerly served Meikefu Dental (Fuzhou), Ningbo Dental Hospital, Jibo Medical Dental Group, Hangzhou Stomatology Hospital, Jiangxi Huihuang Dental, Chengdu Tang Dental, Shaanxi White Rabbit Dental and more"]
+    }
+  ];
+  const teamCards = team.map((m) => `
+    <div class="card team-card">
+      <div class="team-photo"><img src="${m.img}" alt="${esc(m.name)} — ${esc(m.role)}" loading="lazy"></div>
+      <div class="team-body">
+        <h3>${esc(m.name)} <span class="team-zh">${esc(m.nameZh)}</span></h3>
+        <div class="team-role">${esc(m.role)}</div>
+        <ul class="team-creds">${m.creds.map((c) => `<li>${esc(c)}</li>`).join("")}</ul>
+      </div>
+    </div>`).join("");
+
   const body = `
   <section class="detail-hero"><div class="container">
     <h1>About China Dental Travel</h1>
@@ -547,6 +580,11 @@ function buildAbout() {
   </div></section>
 
   <section class="section-soft"><div class="container">
+    <div class="section-head"><div class="eyebrow">Our team</div><h2>The people behind your trip</h2><p>A small, senior team — strategy, clinical coordination and patient care in one.</p></div>
+    <div class="team-grid">${teamCards}</div>
+  </div></section>
+
+  <section><div class="container">
     <div class="section-head"><div class="eyebrow">Our promise</div><h2>What you can count on</h2></div>
     <div class="grid grid-3">
       <div class="card"><h3>Verified clinics</h3><p style="color:var(--muted)">Licensed medical institutions only. No exceptions.</p></div>
@@ -561,9 +599,14 @@ function buildAbout() {
     "name": SITE.name,
     "url": SITE.domain,
     "description": SITE.description,
-    "founder": { "@type": "Organization", "name": SITE.organization.founderClinic }
+    "founder": { "@type": "Organization", "name": SITE.organization.founderClinic },
+    "employee": team.map((m) => ({
+      "@type": "Person",
+      "name": m.name,
+      "jobTitle": m.role
+    }))
   };
-  return page({ title: "About Us — Dental Tourism in China", description: "China Dental Travel connects international patients with licensed dental clinics in China — affordable treatment, verified clinics, and travel coordination.", body, jsonld, active: "/about/" });
+  return page({ title: "About Us — Dental Tourism in China", description: "Meet the China Dental Travel team and our founding clinic Jingzhou Dental Group — senior professionals coordinating affordable, verified dental care for international patients.", body, jsonld, active: "/about/" });
 }
 
 /* ---- Contact ---- */
