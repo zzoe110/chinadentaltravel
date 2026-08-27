@@ -40,6 +40,7 @@
     { "label": "Home", "href": "/" },
     { "label": "Services", "href": "/services/" },
     { "label": "Destinations", "href": "/destinations/" },
+    { "label": "Pricing", "href": "/pricing/" },
     { "label": "Why China", "href": "/#why-china" },
     { "label": "FAQ", "href": "/faq/" },
     { "label": "About", "href": "/about/" },

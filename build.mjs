@@ -637,6 +637,110 @@ function buildFaq() {
   return page({ title: "FAQ — Dental Tourism in China", description: "Dental tourism in China FAQ: safety, savings, visas, aftercare, treatment quality and pricing — answered for international patients.", body, jsonld, active: "/faq/" });
 }
 
+/* ---- Pricing / Cost Comparison (USA) ---- */
+function buildPricing() {
+  // [项目, 美国自费区间, 中国区间, 主要变量]
+  const rows = [
+    ["Dental cleaning (ultrasonic)", "$100 – $250", "$25 – $80", "Polish & airflow included"],
+    ["Scaling & root planing (per quadrant)", "$200 – $400", "$40 – $150", "Pocket depth"],
+    ["Tooth-coloured filling", "$150 – $400", "$25 – $110", "Cavity size & material"],
+    ["Root canal (front tooth)", "$700 – $1,200", "$90 – $300", "Microscope-assisted or not"],
+    ["Root canal (molar)", "$1,000 – $2,000", "$150 – $500", "Number of canals"],
+    ["Simple extraction", "$150 – $400", "$25 – $90", "Tooth position & roots"],
+    ["Wisdom tooth removal (impacted)", "$400 – $900", "$70 – $280", "Impaction & CBCT needed"],
+    ["Porcelain-fused-metal crown", "$900 – $1,800", "$150 – $500", "Metal base material"],
+    ["All-ceramic crown", "$1,200 – $2,500", "$300 – $900", "Ceramic block & lab quality"],
+    ["Porcelain veneer", "$1,000 – $2,500", "$350 – $1,000", "Veneer type & design"],
+    ["Single implant (incl. abutment & crown)", "$3,000 – $6,000", "$1,100 – $2,800", "Implant brand, bone graft"],
+    ["Bone graft (single site)", "$600 – $1,500", "$250 – $800", "Bone material & membrane"],
+    ["Sinus lift", "$1,500 – $2,500", "$400 – $1,200", "Internal or external"],
+    ["All-on-4 fixed bridge (full arch)", "$20,000 – $30,000", "$8,000 – $17,000", "Implant brand & bridge"],
+    ["Implant-supported denture (full arch)", "$8,000 – $18,000", "$3,000 – $8,000", "Number of implants"],
+    ["Full denture (traditional, full arch)", "$1,500 – $4,000", "$400 – $1,500", "Base & tooth material"],
+    ["Clear aligners (full treatment)", "$4,000 – $8,000", "$1,400 – $6,000", "Brand & treatment length"],
+    ["Metal braces (full treatment)", "$3,000 – $6,000", "$1,000 – $2,800", "Visit frequency"],
+    ["Teeth whitening (in-office)", "$400 – $1,000", "$150 – $450", "Equipment & sessions"],
+    ["CBCT scan", "$150 – $400", "$25 – $90", "Scan range"],
+  ];
+  const trs = rows.map(([name, us, cn, note]) => `
+    <tr><td>${esc(name)}</td><td class="price">${us}</td><td class="price cn">${cn}</td><td style="color:var(--muted);font-size:13px">${esc(note)}</td></tr>`).join("");
+
+  // 三个预算情形
+  const scenarios = [
+    { title: "Two dental implants", us: "$7,000 – $12,000", cn: "$2,400 – $5,600", flights: "$2,000 – $3,600", stay: "$1,200 – $3,000", note: "Real savings exist — ask us for an itemised quote." },
+    { title: "All-on-4 on one arch", us: "$20,000 – $30,000", cn: "$8,000 – $17,000", flights: "$2,000 – $3,600", stay: "$2,100 – $5,300", note: "The biggest gap of all — the trip often pays for itself." },
+    { title: "Four all-ceramic crowns", us: "$4,800 – $10,000", cn: "$1,200 – $3,600", flights: "$1,000 – $1,800", stay: "$850 – $2,100", note: "For smaller plans, count travel before deciding." },
+  ];
+  const scenCards = scenarios.map((s) => `
+    <div class="card" style="padding:22px">
+      <h3>${esc(s.title)}</h3>
+      <p style="margin:10px 0 4px"><strong>In the US:</strong> <span style="color:var(--blue-dark)">${esc(s.us)}</span></p>
+      <p style="margin:0 0 10px"><strong>In China:</strong> <span style="color:var(--green)">${esc(s.cn)}</span></p>
+      <div style="border-top:1px solid var(--line);padding-top:10px;font-size:14px;color:var(--muted)">
+        ✈️ Flights: ${esc(s.flights)}<br>🏨 Stay & meals: ${esc(s.stay)}
+      </div>
+      <p style="font-size:13px;color:var(--muted);margin:10px 0 0">${esc(s.note)}</p>
+    </div>`).join("");
+
+  // 容易漏算的七项
+  const hidden = [
+    "Is the crown included in the implant price? — the most common misunderstanding.",
+    "Abutment fees — sometimes priced separately; custom front-tooth abutments cost more.",
+    "Bone graft & sinus lift — hard to predict before a CBCT scan; a possible extra.",
+    "Pre-op extraction & periodontal treatment — necessary steps before implants, often billed separately.",
+    "Temporary denture — the item most often forgotten in full-arch plans.",
+    "Check-ups & adjustments — how many are free, and what is charged afterwards.",
+    "Imaging fees — CBCT and panoramic X-rays are usually separate line items.",
+  ];
+  const hiddenHtml = hidden.map((h) => `<li style="padding:8px 0;border-bottom:1px solid var(--line);color:var(--muted);font-size:15px">${esc(h)}</li>`).join("");
+
+  const body = `
+  <section class="detail-hero"><div class="container">
+    <h1>Dental Costs: USA vs China</h1>
+    <p class="tagline">Transparent price ranges, real budget examples, and the seven costs people forget.</p>
+  </div></section>
+
+  <section><div class="container">
+    <p class="notice" style="margin-bottom:26px">All figures below are public self-pay market reference ranges, shown in USD, to help you understand the scale of savings. They are <strong>not quotes or promises</strong>. Final pricing depends on your oral condition, materials chosen and clinic position — always confirm with a written quote from a licensed dentist after an in-person exam.</p>
+    <div class="block-title"><span class="badge">$</span><h2>Main treatment price comparison</h2></div>
+    <div class="price-table-wrap">
+      <table class="price-table">
+        <thead><tr><th>Treatment</th><th>USA (self-pay)</th><th>China</th><th>Main variables</th></tr></thead>
+        <tbody>${trs}</tbody>
+      </table>
+    </div>
+    <p class="notice" style="margin-top:14px">Typical savings on treatment alone: <strong>60–80%</strong> on most procedures. Add flights and stay, and the trip still usually pays for itself on plans above ~$5,000.</p>
+  </div></section>
+
+  <section class="section-soft">
+    <div class="container">
+      <div class="section-head"><div class="eyebrow">Full budget</div><h2>Does the trip still save money?</h2><p>Comparing treatment alone is misleading. Here are three realistic full-budget scenarios.</p></div>
+      <div class="grid grid-3">${scenCards}</div>
+      <p class="notice" style="margin-top:22px"><strong>How to judge if it's worth it:</strong> if you were already planning to visit China, flights are not an incremental cost — as long as the treatment saving beats your stay and service fees, the trip is worthwhile. If you are flying purely for dentistry, plans above ~$5,000 usually make sense. We calculate this for you and will tell you honestly when a trip is not worth it.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" style="max-width:860px">
+      <div class="block-title"><span class="badge">!</span><h2>Seven costs people forget</h2></div>
+      <ul style="list-style:none;padding:0">${hiddenHtml}</ul>
+      <p class="notice" style="margin-top:16px">None of these are anyone trying to trick you — they are mostly differences in how quotes are written. Asking in advance avoids surprises.</p>
+    </div>
+  </section>
+  ${ctaBand()}`;
+
+  const jsonld = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": rows.slice(0, 6).map(([name, us, cn]) => ({
+      "@type": "Question",
+      "name": "How much does " + name.toLowerCase() + " cost in China vs the USA?",
+      "acceptedAnswer": { "@type": "Answer", "text": "In the USA it typically ranges " + us + " self-pay; in China the typical range is " + cn + ". Final cost depends on your individual assessment and materials." }
+    }))
+  };
+  return page({ title: "Dental Costs in China vs USA — Price Comparison", description: "Compare dental treatment costs in China vs the USA: implants, crowns, root canals, whitening and more — with real budget examples and savings of 60–80%.", body, jsonld, active: "/pricing/" });
+}
+
 /* ================= BUILD ================= */
 async function copyDir(src, dest) {
   await fs.mkdir(dest, { recursive: true });
@@ -682,6 +786,7 @@ async function build() {
   await writeFile(path.join(DIST, "about", "index.html"), buildAbout());
   await writeFile(path.join(DIST, "contact", "index.html"), buildContact());
   await writeFile(path.join(DIST, "faq", "index.html"), buildFaq());
+  await writeFile(path.join(DIST, "pricing", "index.html"), buildPricing());
 
   // 404
   await writeFile(path.join(DIST, "404.html"), page({
@@ -691,7 +796,7 @@ async function build() {
   }));
 
   // sitemap
-  const urls = ["/", "/services/", "/destinations/", "/about/", "/contact/", "/faq/",
+  const urls = ["/", "/services/", "/destinations/", "/pricing/", "/about/", "/contact/", "/faq/",
     ...services.map((s) => "/services/" + s.slug + "/"),
     ...cities.map((c) => "/destinations/" + c.slug + "/")];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

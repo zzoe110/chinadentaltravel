@@ -215,6 +215,7 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
 .price-table th, .price-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--line); }
 .price-table th { background: var(--bg-soft); font-size: 14px; }
 .price-table td.price { font-weight: 700; color: var(--blue-dark); }
+.price-table td.price.cn { color: var(--green); }
 
 /* ---------- Contact ---------- */
 .contact-hero { padding: 28px 0 30px; }
