@@ -296,7 +296,6 @@ function header(active) {
     </a>
     <nav class="nav" id="nav">${nav}</nav>
     <div class="header-cta">
-      <div class="translate-wrap"><div id="google_translate_element"></div></div>
       <a class="btn btn-whatsapp" href="${WA_LINK}">WhatsApp</a>
       <button class="nav-toggle" aria-label="Menu" id="navToggle">&#9776;</button>
     </div>
@@ -330,6 +329,10 @@ function footer() {
           ${friendOpts}
         </select>
         <p style="color:#8fa0b3;font-size:12px;margin-top:10px;line-height:1.5">Partner &amp; friend websites worth visiting.</p>
+      </div>
+      <div><h4>Language</h4>
+        <div id="google_translate_element" class="footer-translate"></div>
+        <p style="color:#8fa0b3;font-size:12px;margin-top:10px;line-height:1.5">Translate this site into your language.</p>
       </div>
     </div>
     <div class="footer-bottom">
