@@ -262,15 +262,15 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
 
 /* ---------- Team ---------- */
 .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-.team-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-.team-photo { height: 200px; overflow: hidden; background: var(--blue-light); }
+.team-card { padding: 14px; display: flex; flex-direction: row; align-items: stretch; gap: 14px; }
+.team-photo { width: 140px; flex: 0 0 140px; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 10px; background: var(--blue-light); }
 .team-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; }
-.team-body { padding: 12px 14px 14px; }
-.team-body h3 { margin: 0 0 2px; font-size: 1.05rem; }
+.team-body { flex: 1; min-width: 0; }
+.team-body h3 { margin: 0 0 2px; font-size: 1.02rem; line-height: 1.2; }
 .team-zh { font-weight: 500; color: var(--muted); font-size: .85rem; }
-.team-role { color: var(--green); font-weight: 600; font-size: 12.5px; margin-bottom: 6px; }
+.team-role { color: var(--green); font-weight: 600; font-size: 12px; margin-bottom: 6px; line-height: 1.3; }
 .team-creds { list-style: none; margin: 0; padding: 0; }
-.team-creds li { position: relative; padding: 2.5px 0 2.5px 15px; color: var(--muted); font-size: 12.5px; border-bottom: 1px dashed var(--line); }
+.team-creds li { position: relative; padding: 2px 0 2px 14px; color: var(--muted); font-size: 12px; border-bottom: 1px dashed var(--line); line-height: 1.35; }
 .team-creds li:last-child { border-bottom: 0; }
 .team-creds li::before { content: "•"; position: absolute; left: 2px; color: var(--blue); font-weight: 700; }
 
