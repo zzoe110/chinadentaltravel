@@ -531,21 +531,21 @@ function buildAbout() {
       name: "Can Feng",
       nameZh: "澯烽",
       role: "Founder, China Dental Travel",
-      creds: ["Planning Director, Jingzhou Dental Group", "10 years in China's media & marketing industry", "6 years in China's dental industry"]
+      creds: ["Planning Director, Jingzhou Dental Group", "10 yrs media & marketing · 6 yrs dental industry"]
     },
     {
       img: "/assets/img/team/xiefang.jpg",
       name: "Jie Fang",
       nameZh: "解放",
       role: "Strategy & International Relations",
-      creds: ["B.A. in Finance, Renmin University of China, Class of 2006", "M.S. in Management & Finance, HEC Paris, Class of 2010", "Chief Strategy Officer, Beijing Jingzhou Dental Group", "CEO, Beijing Jingde Dental Group", "Founder & Director, Arcnova AI", "Director, Shanghai Qimei Orthodontics"]
+      creds: ["Renmin Univ. (Finance '06) · HEC Paris (Mgmt & Finance '10)", "Chief Strategy Officer, Beijing Jingzhou Dental Group", "CEO, Beijing Jingde Dental · Founder, Arcnova AI · Dir., Shanghai Qimei Orthodontics"]
     },
     {
       img: "/assets/img/team/mengxiangyun.jpg",
       name: "Meng Xiangyun",
       nameZh: "孟祥云",
       role: "Clinical Operations & Patient Experience",
-      creds: ["Founder & CEO, YiYi Medical Management", "Senior National Psychological Counselor (China)", "National Oral Health Manager — Intermediate (China)", "Formerly served Meikefu Dental (Fuzhou), Ningbo Dental Hospital, Jibo Medical Dental Group, Hangzhou Stomatology Hospital, Jiangxi Huihuang Dental, Chengdu Tang Dental, Shaanxi White Rabbit Dental and more"]
+      creds: ["Founder & CEO, YiYi Medical Management", "Senior Psychological Counselor · Oral Health Manager (China)", "Served 7+ dental groups incl. Meikefu (Fuzhou), Ningbo Dental, Hangzhou Stomatology, White Rabbit (Shaanxi) & more"]
     }
   ];
   const teamCards = team.map((m) => `
@@ -563,11 +563,10 @@ function buildAbout() {
     <h1>About China Dental Travel</h1>
     <p class="tagline">An information & referral platform for international dental patients.</p>
   </div></section>
-  <section><div class="container grid grid-2" style="align-items:start">
+  <section><div class="container grid grid-2" style="align-items:start;gap:30px">
     <div>
       <h2>${esc(SITE.organization.founderClinic)} as our founding clinic</h2>
-      <p>China Dental Travel was built to connect overseas patients with licensed, high-quality dental care in China — and to turn necessary treatment into an extraordinary trip. Our founding and preferred clinic, ${esc(SITE.organization.founderClinic)}, brings 16 years of clinical heritage across more than 20 locations.</p>
-      <p>Because no single clinic can serve every traveller, we also curate and verify partner institutions in other provinces. Every clinic on the platform holds a valid Chinese Medical Institution License and employs licensed dentists — we verify before we list.</p>
+      <p style="margin-bottom:.8rem">China Dental Travel connects overseas patients with licensed, high-quality dental care in China — and turns necessary treatment into an extraordinary trip. Our founding and preferred clinic, ${esc(SITE.organization.founderClinic)}, brings 16 years of clinical heritage across more than 20 locations. We also curate and verify partner institutions in other provinces — every clinic on the platform holds a valid Chinese Medical Institution License, verified before we list.</p>
     </div>
     <div class="card" style="text-align:center">
       <div class="stat-row" style="justify-content:space-around">
@@ -575,24 +574,22 @@ function buildAbout() {
         <div class="stat"><strong>20+</strong><span>Clinic locations</span></div>
         <div class="stat"><strong>6</strong><span>Destinations</span></div>
       </div>
-      <p style="color:var(--muted);margin-top:18px;font-size:14px">Numbers reflect the founding group's footprint; partner network is expanding.</p>
     </div>
   </div></section>
 
   <section class="section-soft"><div class="container">
-    <div class="section-head"><div class="eyebrow">Our team</div><h2>The people behind your trip</h2><p>A small, senior team — strategy, clinical coordination and patient care in one.</p></div>
+    <div class="section-head" style="margin-bottom:26px"><div class="eyebrow">Our team</div><h2 style="margin-bottom:6px">The people behind your trip</h2></div>
     <div class="team-grid">${teamCards}</div>
   </div></section>
 
-  <section><div class="container">
-    <div class="section-head"><div class="eyebrow">Our promise</div><h2>What you can count on</h2></div>
+  <section class="section-soft" style="padding:40px 0"><div class="container">
+    <div class="section-head" style="margin-bottom:26px"><div class="eyebrow">Our promise</div><h2 style="margin-bottom:6px">What you can count on</h2></div>
     <div class="grid grid-3">
-      <div class="card"><h3>Verified clinics</h3><p style="color:var(--muted)">Licensed medical institutions only. No exceptions.</p></div>
-      <div class="card"><h3>Transparent prices</h3><p style="color:var(--muted)">Indicative ranges up front; confirmed quotes before treatment.</p></div>
-      <div class="card"><h3>English support</h3><p style="color:var(--muted)">Bilingual coordination from first message to aftercare.</p></div>
+      <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">Verified clinics</h3><p style="color:var(--muted);font-size:14px">Licensed medical institutions only. No exceptions.</p></div>
+      <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">Transparent prices</h3><p style="color:var(--muted);font-size:14px">Indicative ranges up front; confirmed quotes before treatment.</p></div>
+      <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">English support</h3><p style="color:var(--muted);font-size:14px">Bilingual coordination from first message to aftercare.</p></div>
     </div>
-  </div></section>
-  ${ctaBand()}`;
+  </div></section>`;
   const jsonld = {
     "@context": "https://schema.org",
     "@type": "Organization",
