@@ -436,3 +436,29 @@ collections:
                 - name: "a"
                   label: "回答"
                   widget: "text"
+
+  # ---------------- 友情链接 ----------------
+  - name: "links"
+    label: "友情链接"
+    files:
+      - name: "links"
+        label: "友情链接列表"
+        file: "content/links.json"
+        format: "json"
+        fields:
+          - name: "links"
+            label: "链接条目"
+            hint: "新增/修改/删除友情链接（显示在网站底部下拉框）"
+            widget: "list"
+            field:
+              name: "link"
+              label: "链接"
+              widget: "object"
+              fields:
+                - name: "label"
+                  label: "名称"
+                  widget: "string"
+                - name: "url"
+                  label: "网址"
+                  widget: "string"
+                  hint: "如 https://example.com"

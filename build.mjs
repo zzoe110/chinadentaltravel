@@ -71,6 +71,7 @@ services.sort((a, b) => (a.priority > b.priority ? 1 : -1));
 const cities = await readDirJSON(path.join(CONTENT, "cities"));
 const featured = cities.filter((c) => c.featured);
 const faqs = (await readJSON(path.join(CONTENT, "faq.json"))).items;
+const friendLinks = (await readJSON(path.join(CONTENT, "links.json"))).links || [];
 const YEAR = new Date().getFullYear();
 const WA = SITE.contact.whatsapp;
 const WA_LINK = "https://wa.me/" + WA.replace(/[^0-9]/g, "");
@@ -101,6 +102,7 @@ function header(active) {
 function footer() {
   const explore = NAV.map((n) => `<a href="${n.href}">${esc(n.label)}</a>`).join("");
   const svcLinks = services.map((s) => `<a href="/services/${s.slug}/">${esc(s.name)}</a>`).join("");
+  const friendOpts = friendLinks.map((l) => `<option value="${esc(l.url)}">${esc(l.label)}</option>`).join("");
   return `<footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
@@ -115,6 +117,14 @@ function footer() {
         <a href="mailto:${esc(SITE.contact.email)}">${esc(SITE.contact.email)}</a>
         <a href="${esc(SITE.contact.facebook)}">Facebook Messenger</a>
         <a href="tel:${esc(SITE.contact.phone)}">${esc(SITE.contact.phone)}</a>
+      </div>
+      <div><h4>Friends</h4>
+        <label class="visually-hidden" for="friendLinks">Friend websites</label>
+        <select id="friendLinks" class="footer-select" aria-label="Friend websites" onchange="if(this.value){window.open(this.value, '_blank', 'noopener');this.selectedIndex=0;}">
+          <option value="" selected>Choose a site…</option>
+          ${friendOpts}
+        </select>
+        <p style="color:#8fa0b3;font-size:12px;margin-top:10px;line-height:1.5">Partner &amp; friend websites worth visiting.</p>
       </div>
     </div>
     <div class="footer-bottom">
