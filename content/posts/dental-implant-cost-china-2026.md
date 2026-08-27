@@ -69,3 +69,5 @@ If you were already planning to visit China, flights are not an extra cost. As l
 ## Next steps
 
 Message us on WhatsApp with your X-rays and the teeth you want replaced. We match you with a licensed clinic, confirm an itemised quote, and suggest a relaxed itinerary around your appointments — all before you commit to anything.
+
+Not sure which city to treat in? Our guide [Beijing vs Xingyi for dental implants](/blog/beijing-vs-xingyi-dental-implants/) compares cost, clinic style and recovery so you can pick the destination that fits your trip.

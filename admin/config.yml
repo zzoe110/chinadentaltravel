@@ -504,6 +504,29 @@ collections:
         label: "作者"
         widget: "string"
         default: "China Dental Travel"
+      - name: "tags"
+        label: "标签（SEO 用，可留空）"
+        widget: "list"
+        field:
+          name: tag
+          label: Tag
+          widget: string
+        required: false
+      - name: "faq"
+        label: "FAQ（自动生成 FAQPage 结构化数据，可选）"
+        widget: "list"
+        required: false
+        field:
+          name: qa
+          label: 问答
+          widget: object
+          fields:
+            - name: q
+              label: 问题
+              widget: string
+            - name: a
+              label: 答案
+              widget: text
       - name: "body"
         label: "正文（英文）"
         widget: "markdown"

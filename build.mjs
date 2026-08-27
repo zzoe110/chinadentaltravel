@@ -67,29 +67,103 @@ const slugify = (s = "") => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").
    Decap CMS stores posts as YAML frontmatter + markdown body
    (the `body` markdown widget becomes the content after the
    second `---` delimiter).
+
+   parseFrontmatter uses a small YAML subset parser that
+   supports scalars, inline arrays [a, b], booleans, numbers,
+   nested maps and block lists — enough for blog posts
+   (including a `faq` block for FAQPage structured data).
    ========================================================= */
+
+function parseYamlScalar(v) {
+  v = v.trim();
+  if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) return v.slice(1, -1);
+  if (v === "true") return true;
+  if (v === "false") return false;
+  if (v !== "" && !isNaN(Number(v))) return Number(v);
+  return v;
+}
+
+function parseInlineArray(v) {
+  const inner = v.trim().slice(1, -1).trim();
+  if (!inner) return [];
+  const items = [];
+  let cur = "", q = null;
+  for (const ch of inner) {
+    if (q) { cur += ch; if (ch === q) q = null; }
+    else if (ch === '"' || ch === "'") { q = ch; cur += ch; }
+    else if (ch === ",") { items.push(cur); cur = ""; }
+    else cur += ch;
+  }
+  if (cur.trim()) items.push(cur);
+  return items.map((s) => parseYamlScalar(s));
+}
+
+function parseYaml(text) {
+  const lines = text.split("\n");
+  let idx = 0;
+  function parseBlock(indent) {
+    const seq = [];
+    const map = {};
+    let isSeq = false;
+    while (idx < lines.length) {
+      const raw = lines[idx];
+      if (!raw.trim() || raw.trim().startsWith("#")) { idx++; continue; }
+      const curIndent = raw.match(/^(\s*)/)[1].length;
+      if (curIndent < indent) break;
+      const content = raw.slice(curIndent);
+      if (content.startsWith("- ")) {
+        isSeq = true;
+        const itemContent = content.slice(2);
+        const kv = itemContent.match(/^([^:]+):\s?(.*)$/);
+        if (kv) {
+          idx++;
+          const obj = {};
+          const key = kv[1].trim();
+          let val = kv[2].trim();
+          if (val === "") obj[key] = parseBlock(curIndent + 2);
+          else if (val.startsWith("[") && val.endsWith("]")) obj[key] = parseInlineArray(val);
+          else obj[key] = parseYamlScalar(val);
+          while (idx < lines.length) {
+            const r2 = lines[idx];
+            if (!r2.trim() || r2.trim().startsWith("#")) { idx++; continue; }
+            const ci2 = r2.match(/^(\s*)/)[1].length;
+            if (ci2 !== curIndent + 2) break;
+            const c2 = r2.slice(ci2);
+            const kv2 = c2.match(/^([^:]+):\s?(.*)$/);
+            if (!kv2) break;
+            idx++;
+            const k2 = kv2[1].trim();
+            let v2 = kv2[2].trim();
+            if (v2 === "") obj[k2] = parseBlock(ci2 + 2);
+            else if (v2.startsWith("[") && v2.endsWith("]")) obj[k2] = parseInlineArray(v2);
+            else obj[k2] = parseYamlScalar(v2);
+          }
+          seq.push(obj);
+        } else {
+          seq.push(parseYamlScalar(itemContent));
+          idx++;
+        }
+      } else {
+        const kv = content.match(/^([^:]+):\s?(.*)$/);
+        if (!kv) { idx++; continue; }
+        const key = kv[1].trim();
+        let val = kv[2].trim();
+        idx++;
+        if (val === "") map[key] = parseBlock(curIndent + 2);
+        else if (val.startsWith("[") && val.endsWith("]")) map[key] = parseInlineArray(val);
+        else map[key] = parseYamlScalar(val);
+      }
+    }
+    return isSeq ? seq : map;
+  }
+  return parseBlock(0);
+}
 
 /* split "---\n<yaml>\n---\n<markdown>" → {data, body} */
 function parseFrontmatter(raw) {
   const m = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?([\s\S]*)$/);
   if (!m) return { data: {}, body: raw };
-  const fm = m[1], body = m[2];
-  const data = {};
-  for (const line of fm.split("\n")) {
-    if (!line.trim() || line.trim().startsWith("#")) continue;
-    const idx = line.indexOf(":");
-    if (idx === -1) continue;
-    const key = line.slice(0, idx).trim();
-    let val = line.slice(idx + 1).trim();
-    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
-      val = val.slice(1, -1);
-    }
-    if (val === "true") val = true;
-    else if (val === "false") val = false;
-    else if (val !== "" && !isNaN(Number(val))) val = Number(val);
-    data[key] = val;
-  }
-  return { data, body };
+  return { data: parseYaml(m[1]), body: m[2] };
 }
 
 /* inline markdown: escape first, then bold/italic/code/link */
@@ -943,6 +1017,8 @@ async function readPosts() {
       cover: data.cover || "",
       coverAlt: data.coverAlt || "",
       author: data.author || SITE.name,
+      faq: Array.isArray(data.faq) ? data.faq.map((f) => ({ q: f.q || "", a: f.a || "" })) : [],
+      tags: Array.isArray(data.tags) ? data.tags : [],
       html, toc, words,
       readingTime: Math.max(1, Math.round(words / 200)),
       file: f
@@ -1012,6 +1088,13 @@ function buildPost(p, allPosts) {
   const coverHtml = p.cover
     ? `<div class="post-cover media protect"><img src="${p.cover}" alt="${esc(p.coverAlt || p.title)}" loading="lazy"></div>`
     : "";
+  const faqHtml = (Array.isArray(p.faq) && p.faq.length)
+    ? `<section class="section-soft"><div class="container" style="max-width:900px">
+    <div class="section-head" style="text-align:left;margin-bottom:22px"><div class="eyebrow">FAQ</div><h2>Frequently asked</h2></div>
+    <div class="post-faq">${p.faq.map((f) => `
+      <div class="faq-item"><button>${esc(f.q)}<span class="plus">+</span></button><div class="answer">${esc(f.a)}</div></div>`).join("")}</div>
+  </div></section>`
+    : "";
   const body = `
   <article class="post-page">
     <div class="container post-head">
@@ -1029,20 +1112,43 @@ function buildPost(p, allPosts) {
       ${tocHtml}
     </div>
   </article>
+  ${faqHtml}
   ${relatedHtml}
   ${ctaBand()}`;
-  const jsonld = {
+  // GEO / SEO 结构化数据：BlogPosting + 面包屑，若有 faq 再加 FAQPage
+  const graph = [{
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": p.title,
     "description": p.excerpt,
     "author": { "@type": "Organization", "name": p.author },
     "datePublished": p.date,
-    "publisher": { "@type": "Organization", "name": SITE.name },
-    "mainEntityOfPage": SITE.domain + "/blog/" + p.slug + "/"
-  };
+    "dateModified": p.date,
+    "publisher": { "@type": "Organization", "name": SITE.name, "logo": { "@type": "ImageObject", "url": SITE.domain + "/assets/img/og-cover.svg" } },
+    "mainEntityOfPage": SITE.domain + "/blog/" + p.slug + "/",
+    "image": p.cover ? SITE.domain + p.cover : SITE.domain + "/assets/img/og-cover.svg"
+  }, {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.domain + "/" },
+      { "@type": "ListItem", "position": 2, "name": "Blog", "item": SITE.domain + "/blog/" },
+      { "@type": "ListItem", "position": 3, "name": p.title, "item": SITE.domain + "/blog/" + p.slug + "/" }
+    ]
+  }];
+  if (Array.isArray(p.faq) && p.faq.length) {
+    graph.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": p.faq.map((f) => ({
+        "@type": "Question",
+        "name": f.q,
+        "acceptedAnswer": { "@type": "Answer", "text": f.a }
+      }))
+    });
+  }
   return page({
-    title: p.title, description: p.excerpt, body, jsonld, active: "/blog/", ogImage: p.cover,
+    title: p.title, description: p.excerpt, body, jsonld: graph, active: "/blog/", ogImage: p.cover,
     extraHead: `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)} Blog" href="/feed.xml">`
   });
 }
