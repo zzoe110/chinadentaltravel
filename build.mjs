@@ -563,17 +563,13 @@ function buildAbout() {
     <h1>About China Dental Travel</h1>
     <p class="tagline">An information & referral platform for international dental patients.</p>
   </div></section>
-  <section><div class="container grid grid-2" style="align-items:start;gap:30px">
-    <div>
-      <h2>${esc(SITE.organization.founderClinic)} as our founding clinic</h2>
-      <p style="margin-bottom:.8rem">China Dental Travel connects overseas patients with licensed, high-quality dental care in China — and turns necessary treatment into an extraordinary trip. Our founding and preferred clinic, ${esc(SITE.organization.founderClinic)}, brings 16 years of clinical heritage across more than 20 locations. We also curate and verify partner institutions in other provinces — every clinic on the platform holds a valid Chinese Medical Institution License, verified before we list.</p>
-    </div>
-    <div class="card" style="text-align:center">
-      <div class="stat-row" style="justify-content:space-around">
-        <div class="stat"><strong>16+</strong><span>Years heritage</span></div>
-        <div class="stat"><strong>20+</strong><span>Clinic locations</span></div>
-        <div class="stat"><strong>6</strong><span>Destinations</span></div>
-      </div>
+  <section><div class="container">
+    <div class="block-title"><span class="badge">✚</span><h2>${esc(SITE.organization.founderClinic)} — our founding clinic</h2></div>
+    <p class="lead-lg" style="max-width:900px;margin-bottom:16px">China Dental Travel connects overseas patients with licensed, high-quality dental care in China — and turns necessary treatment into an extraordinary trip. Our founding and preferred clinic, ${esc(SITE.organization.founderClinic)}, brings 16 years of clinical heritage across more than 20 locations. We also curate and verify partner institutions in other provinces — every clinic on the platform holds a valid Chinese Medical Institution License, verified before we list.</p>
+    <div class="stat-row" style="justify-content:flex-start;gap:48px">
+      <div class="stat"><strong>16+</strong><span>Years heritage</span></div>
+      <div class="stat"><strong>20+</strong><span>Clinic locations</span></div>
+      <div class="stat"><strong>6</strong><span>Destinations</span></div>
     </div>
   </div></section>
 

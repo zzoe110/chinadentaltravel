@@ -263,7 +263,7 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
 /* ---------- Team ---------- */
 .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 .team-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-.team-photo { aspect-ratio: 3 / 2; overflow: hidden; background: var(--blue-light); }
+.team-photo { height: 200px; overflow: hidden; background: var(--blue-light); }
 .team-photo img { width: 100%; height: 100%; object-fit: cover; }
 .team-body { padding: 14px 16px 18px; }
 .team-body h3 { margin: 0 0 2px; font-size: 1.1rem; }
