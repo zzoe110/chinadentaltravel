@@ -62,6 +62,137 @@ function media(src, alt, cls = "", art = {}) {
 /* slugify a title for placeholder keys */
 const slugify = (s = "") => String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 40);
 
+/* =========================================================
+   Blog: zero-dependency frontmatter + markdown parser
+   Decap CMS stores posts as YAML frontmatter + markdown body
+   (the `body` markdown widget becomes the content after the
+   second `---` delimiter).
+   ========================================================= */
+
+/* split "---\n<yaml>\n---\n<markdown>" → {data, body} */
+function parseFrontmatter(raw) {
+  const m = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n?([\s\S]*)$/);
+  if (!m) return { data: {}, body: raw };
+  const fm = m[1], body = m[2];
+  const data = {};
+  for (const line of fm.split("\n")) {
+    if (!line.trim() || line.trim().startsWith("#")) continue;
+    const idx = line.indexOf(":");
+    if (idx === -1) continue;
+    const key = line.slice(0, idx).trim();
+    let val = line.slice(idx + 1).trim();
+    if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+      val = val.slice(1, -1);
+    }
+    if (val === "true") val = true;
+    else if (val === "false") val = false;
+    else if (val !== "" && !isNaN(Number(val))) val = Number(val);
+    data[key] = val;
+  }
+  return { data, body };
+}
+
+/* inline markdown: escape first, then bold/italic/code/link */
+function inlineMd(s) {
+  s = esc(s);
+  s = s.replace(/`([^`]+)`/g, (_, c) => `<code>${c}</code>`);
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  s = s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, t, u) => `<a href="${u}">${t}</a>`);
+  return s;
+}
+
+const slugHeading = (s) =>
+  String(s).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 60);
+
+const splitRow = (line) =>
+  line.replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
+
+/* block-level markdown → HTML. Returns {html, toc} */
+function mdToHtml(md) {
+  const lines = md.replace(/\r\n/g, "\n").split("\n");
+  const out = [];
+  const toc = [];
+  let i = 0;
+  let para = [];
+  const flushPara = () => {
+    if (para.length) { out.push("<p>" + inlineMd(para.join(" ")) + "</p>"); para = []; }
+  };
+  while (i < lines.length) {
+    const line = lines[i];
+    if (/^```/.test(line)) {                       // fenced code
+      flushPara();
+      const code = [];
+      i++;
+      while (i < lines.length && !/^```/.test(lines[i])) { code.push(lines[i]); i++; }
+      i++;
+      out.push("<pre><code>" + esc(code.join("\n")) + "</code></pre>");
+      continue;
+    }
+    const h = line.match(/^(#{1,6})\s+(.*)$/);     // heading
+    if (h) {
+      flushPara();
+      const level = h[1].length;
+      const text = h[2].trim();
+      const id = slugHeading(text);
+      out.push(`<h${level} id="${id}">${inlineMd(text)}</h${level}>`);
+      if (level === 2 || level === 3) toc.push({ level, text, id });
+      i++; continue;
+    }
+    if (/^-{3,}$/.test(line.trim())) {             // hr
+      flushPara(); out.push("<hr>"); i++; continue;
+    }
+    if (/^>\s?/.test(line)) {                       // blockquote
+      flushPara();
+      const q = [];
+      while (i < lines.length && /^>\s?/.test(lines[i])) { q.push(lines[i].replace(/^>\s?/, "")); i++; }
+      out.push("<blockquote>" + inlineMd(q.join(" ")) + "</blockquote>");
+      continue;
+    }
+    if (/^\|/.test(line) && i + 1 < lines.length && /^\|?[\s:|-]+\|/.test(lines[i + 1])) { // table
+      flushPara();
+      const head = splitRow(line);
+      i += 2;
+      const rows = [];
+      while (i < lines.length && /^\|/.test(lines[i])) { rows.push(splitRow(lines[i])); i++; }
+      let t = '<div class="table-wrap"><table class="post-table"><thead><tr>' +
+        head.map((c) => `<th>${inlineMd(c)}</th>`).join("") + "</tr></thead><tbody>";
+      for (const r of rows) t += "<tr>" + r.map((c) => `<td>${inlineMd(c)}</td>`).join("") + "</tr>";
+      t += "</tbody></table></div>";
+      out.push(t);
+      continue;
+    }
+    if (/^[-*]\s+/.test(line)) {                    // unordered list
+      flushPara();
+      const items = [];
+      while (i < lines.length && /^[-*]\s+/.test(lines[i])) { items.push(lines[i].replace(/^[-*]\s+/, "")); i++; }
+      out.push("<ul>" + items.map((it) => `<li>${inlineMd(it)}</li>`).join("") + "</ul>");
+      continue;
+    }
+    if (/^\d+\.\s+/.test(line)) {                   // ordered list
+      flushPara();
+      const items = [];
+      while (i < lines.length && /^\d+\.\s+/.test(lines[i])) { items.push(lines[i].replace(/^\d+\.\s+/, "")); i++; }
+      out.push("<ol>" + items.map((it) => `<li>${inlineMd(it)}</li>`).join("") + "</ol>");
+      continue;
+    }
+    if (!line.trim()) { flushPara(); i++; continue; }
+    para.push(line.trim());
+    i++;
+  }
+  flushPara();
+  return { html: out.join("\n"), toc };
+}
+
+/* deterministic "Aug 27, 2026" from ISO or YYYY-MM-DD */
+function formatDate(iso) {
+  if (!iso) return "";
+  const m = String(iso).match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return String(iso);
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  return `${months[parseInt(m[2], 10) - 1]} ${parseInt(m[3], 10)}, ${m[1]}`;
+}
+
 /* ---------- data ---------- */
 const siteData = await readJSON(path.join(CONTENT, "site.json"));
 const SITE = siteData;
@@ -138,7 +269,7 @@ function footer() {
 </footer>`;
 }
 
-function page({ title, description, body, jsonld, active, ogImage }) {
+function page({ title, description, body, jsonld, active, ogImage, extraHead = "" }) {
   const fullTitle = title.includes(SITE.name) ? title : title + (SITE.seo.titleSuffix || "");
   const og = ogImage || SITE.seo.ogImage;
   return `<!DOCTYPE html>
@@ -164,6 +295,7 @@ function page({ title, description, body, jsonld, active, ogImage }) {
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/style.css">
   ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ""}
+  ${extraHead}
 </head>
 <body>
   ${header(active)}
@@ -787,6 +919,157 @@ function buildPricing() {
   return page({ title: "Dental Costs in China vs USA — Price Comparison", description: "Compare dental treatment costs in China vs the USA: implants, crowns, root canals, whitening and more — with real budget examples and savings of 60–80%.", body, jsonld, active: "/pricing/" });
 }
 
+/* ================= BLOG ================= */
+
+async function readPosts() {
+  const dir = path.join(CONTENT, "posts");
+  let files = [];
+  try { files = (await fs.readdir(dir)).filter((f) => f.endsWith(".md")); }
+  catch { return []; }
+  const posts = [];
+  for (const f of files) {
+    const raw = await fs.readFile(path.join(dir, f), "utf8");
+    const { data, body } = parseFrontmatter(raw);
+    const { html, toc } = mdToHtml(body);
+    const slug = data.slug || f.replace(/\.md$/, "");
+    const words = body.split(/\s+/).filter(Boolean).length;
+    posts.push({
+      slug,
+      title: data.title || slug,
+      titleZh: data.titleZh || "",
+      date: data.date || "",
+      category: data.category || "Treatments",
+      excerpt: data.excerpt || "",
+      cover: data.cover || "",
+      coverAlt: data.coverAlt || "",
+      author: data.author || SITE.name,
+      html, toc, words,
+      readingTime: Math.max(1, Math.round(words / 200)),
+      file: f
+    });
+  }
+  posts.sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")));
+  return posts;
+}
+
+function postCard(p) {
+  const cover = p.cover
+    ? `<div class="post-thumb"><img src="${p.cover}" alt="${esc(p.coverAlt || p.title)}" loading="lazy"></div>`
+    : `<div class="post-thumb"><img src="/assets/img/og-cover.svg" alt="${esc(p.title)}" loading="lazy"></div>`;
+  return `<a class="post-card" href="/blog/${p.slug}/" style="text-decoration:none;color:inherit">
+    ${cover}
+    <div class="post-card-body">
+      <span class="post-cat">${esc(p.category)}</span>
+      <h3>${esc(p.title)}</h3>
+      <p class="post-excerpt">${esc(p.excerpt)}</p>
+      <div class="post-meta"><span>${formatDate(p.date)}</span><span class="dot">·</span><span>${p.readingTime} min read</span></div>
+    </div>
+  </a>`;
+}
+
+function buildBlog(posts) {
+  const cards = posts.map(postCard).join("");
+  const body = `
+  <section class="detail-hero"><div class="container">
+    <div class="breadcrumb" style="color:#cfe6ff"><a href="/" style="color:#cfe6ff">Home</a> / Blog</div>
+    <h1>Dental Travel Blog</h1>
+    <p class="tagline">Practical guides, treatment explainers and real patient stories for dental tourists to China.</p>
+  </div></section>
+  <section><div class="container">
+    ${posts.length
+      ? `<div class="blog-grid">${cards}</div>`
+      : `<p class="lead-lg">No posts yet — check back soon.</p>`}
+  </div></section>
+  ${ctaBand()}`;
+  const jsonld = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": SITE.name + " Blog",
+    "url": SITE.domain + "/blog/",
+    "blogPost": posts.map((p) => ({
+      "@type": "BlogPosting", "headline": p.title, "url": SITE.domain + "/blog/" + p.slug + "/"
+    }))
+  };
+  return page({
+    title: "Dental Travel Blog — Guides & Patient Stories",
+    description: "Guides and stories for dental tourists to China: implant costs, treatment explainers, travel tips and patient experiences.",
+    body, jsonld, active: "/blog/",
+    extraHead: `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)} Blog" href="/feed.xml">`
+  });
+}
+
+function buildPost(p, allPosts) {
+  const tocHtml = p.toc.length
+    ? `<nav class="post-toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ul>${p.toc.map((t) => `<li class="toc-${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`).join("")}</ul></nav>`
+    : "";
+  const related = allPosts.filter((x) => x.slug !== p.slug && x.category === p.category).slice(0, 3);
+  const relatedHtml = related.length
+    ? `<section class="section-soft"><div class="container" style="max-width:900px">
+    <div class="section-head" style="text-align:left;margin-bottom:22px"><div class="eyebrow">Related</div><h2>More in ${esc(p.category)}</h2></div>
+    <div class="blog-grid related">${related.map(postCard).join("")}</div>
+  </div></section>`
+    : "";
+  const coverHtml = p.cover
+    ? `<div class="post-cover media protect"><img src="${p.cover}" alt="${esc(p.coverAlt || p.title)}" loading="lazy"></div>`
+    : "";
+  const body = `
+  <article class="post-page">
+    <div class="container post-head">
+      <div class="breadcrumb"><a href="/">Home</a> / <a href="/blog/">Blog</a> / ${esc(p.category)}</div>
+      <span class="post-cat big">${esc(p.category)}</span>
+      <h1>${esc(p.title)}</h1>
+      ${p.excerpt ? `<p class="lead-lg post-lead">${esc(p.excerpt)}</p>` : ""}
+      <div class="post-meta-row">
+        <span>By ${esc(p.author)}</span><span class="dot">·</span><span>${formatDate(p.date)}</span><span class="dot">·</span><span>${p.readingTime} min read</span>
+      </div>
+    </div>
+    ${coverHtml}
+    <div class="container post-layout">
+      <div class="post-body">${p.html}</div>
+      ${tocHtml}
+    </div>
+  </article>
+  ${relatedHtml}
+  ${ctaBand()}`;
+  const jsonld = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": p.title,
+    "description": p.excerpt,
+    "author": { "@type": "Organization", "name": p.author },
+    "datePublished": p.date,
+    "publisher": { "@type": "Organization", "name": SITE.name },
+    "mainEntityOfPage": SITE.domain + "/blog/" + p.slug + "/"
+  };
+  return page({
+    title: p.title, description: p.excerpt, body, jsonld, active: "/blog/", ogImage: p.cover,
+    extraHead: `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)} Blog" href="/feed.xml">`
+  });
+}
+
+function buildRss(posts) {
+  const items = posts.slice(0, 20).map((p) => `    <item>
+      <title>${esc(p.title)}</title>
+      <link>${SITE.domain}/blog/${p.slug}/</link>
+      <guid isPermaLink="true">${SITE.domain}/blog/${p.slug}/</guid>
+      <pubDate>${new Date(p.date).toUTCString()}</pubDate>
+      <category>${esc(p.category)}</category>
+      <description>${esc(p.excerpt)}</description>
+    </item>`).join("\n");
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2004/Atom">
+  <channel>
+    <title>${esc(SITE.name)} Blog</title>
+    <link>${SITE.domain}/blog/</link>
+    <description>${esc(SITE.description)}</description>
+    <language>en</language>
+    <lastBuildDate>${new Date().toUTCString()}</lastBuildDate>
+    <atom:link href="${SITE.domain}/feed.xml" rel="self" type="application/rss+xml" />
+${items}
+  </channel>
+</rss>`;
+}
+
 /* ================= BUILD ================= */
 async function copyDir(src, dest) {
   await fs.mkdir(dest, { recursive: true });
@@ -834,6 +1117,14 @@ async function build() {
   await writeFile(path.join(DIST, "faq", "index.html"), buildFaq());
   await writeFile(path.join(DIST, "pricing", "index.html"), buildPricing());
 
+  // blog (markdown posts via Decap CMS)
+  const posts = await readPosts();
+  await writeFile(path.join(DIST, "blog", "index.html"), buildBlog(posts));
+  for (const p of posts) {
+    await writeFile(path.join(DIST, "blog", p.slug, "index.html"), buildPost(p, posts));
+  }
+  await writeFile(path.join(DIST, "feed.xml"), buildRss(posts));
+
   // 404
   await writeFile(path.join(DIST, "404.html"), page({
     title: "Page not found", description: "The page you requested could not be found.",
@@ -842,9 +1133,10 @@ async function build() {
   }));
 
   // sitemap
-  const urls = ["/", "/services/", "/destinations/", "/pricing/", "/about/", "/contact/", "/faq/",
+  const urls = ["/", "/services/", "/destinations/", "/pricing/", "/blog/", "/about/", "/contact/", "/faq/",
     ...services.map((s) => "/services/" + s.slug + "/"),
-    ...cities.map((c) => "/destinations/" + c.slug + "/")];
+    ...cities.map((c) => "/destinations/" + c.slug + "/"),
+    ...posts.map((p) => "/blog/" + p.slug + "/")];
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${esc(SITE.domain)}${u}</loc><changefreq>weekly</changefreq><priority>${u === "/" ? "1.0" : "0.8"}</priority></url>`).join("\n")}
@@ -859,8 +1151,8 @@ ${urls.map((u) => `  <url><loc>${esc(SITE.domain)}${u}</loc><changefreq>weekly</
   await copyDir(path.join(ROOT, "admin"), path.join(DIST, "admin"));
 
   console.log("✅ Build complete → " + DIST);
-  console.log("   Pages: home, services(" + services.length + "), destinations(" + cities.length + "), about, contact, faq, 404");
-  console.log("   Sitemap + robots.txt written.");
+  console.log("   Pages: home, services(" + services.length + "), destinations(" + cities.length + "), blog(" + posts.length + "), about, contact, faq, 404");
+  console.log("   Sitemap + robots.txt + feed.xml written.");
 }
 
 build().catch((e) => { console.error(e); process.exit(1); });
