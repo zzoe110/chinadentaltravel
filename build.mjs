@@ -358,6 +358,8 @@ function page({ title, description, body, jsonld, active, ogImage, extraHead = "
   <meta name="description" content="${esc(description)}">
   <meta name="keywords" content="${esc(SITE.seo.keywords)}">
   <link rel="canonical" href="${esc(SITE.domain)}${active}">
+  <link rel="alternate" hreflang="en" href="${esc(SITE.domain)}${active}">
+  <link rel="alternate" hreflang="x-default" href="${esc(SITE.domain)}${active}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${esc(fullTitle)}">
   <meta property="og:description" content="${esc(description)}">
