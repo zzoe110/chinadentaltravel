@@ -349,7 +349,12 @@ function footer() {
 
 function page({ title, description, body, jsonld, active, path, ogImage, extraHead = "" }) {
   const fullTitle = title.includes(SITE.name) ? title : title + (SITE.seo.titleSuffix || "");
-  const og = ogImage || SITE.seo.ogImage;
+  /* 社交平台（Facebook / X / WhatsApp / LinkedIn）不识别 SVG 作分享图，
+     会把卡片渲染成空白。任何 SVG 封面一律兜底为默认位图，避免分享丢缩略图。 */
+  const ogDefault = SITE.seo.ogImage && !SITE.seo.ogImage.endsWith(".svg")
+    ? SITE.seo.ogImage
+    : "/assets/img/hl-beijing-forbidden.jpg";
+  const og = ogImage && !ogImage.endsWith(".svg") ? ogImage : ogDefault;
   /* canonical / hreflang / og:url 必须使用页面自身的真实路径（path）。
      切勿复用导航高亮变量 active —— 否则子页面会把 canonical 声明成上级列表页
      （如 /services/dental-implants/ 声明为 /services/），被 Google 判定为重复内容
