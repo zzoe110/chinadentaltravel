@@ -6,6 +6,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { encodePNG, encodeICO, drawIcon, iconSVG } from "./lib/png.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = __dirname;
@@ -346,9 +347,15 @@ function footer() {
 </footer>`;
 }
 
-function page({ title, description, body, jsonld, active, ogImage, extraHead = "" }) {
+function page({ title, description, body, jsonld, active, path, ogImage, extraHead = "" }) {
   const fullTitle = title.includes(SITE.name) ? title : title + (SITE.seo.titleSuffix || "");
   const og = ogImage || SITE.seo.ogImage;
+  /* canonical / hreflang / og:url 必须使用页面自身的真实路径（path）。
+     切勿复用导航高亮变量 active —— 否则子页面会把 canonical 声明成上级列表页
+     （如 /services/dental-implants/ 声明为 /services/），被 Google 判定为重复内容
+     并拒绝索引。active 只管导航高亮，path 只标识页面自身，两者职责必须分开。 */
+  if (!path) throw new Error(`page() 缺少 path 参数（canonical 所需的页面真实路径）：${title}`);
+  const selfUrl = esc(SITE.domain) + path;
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -357,14 +364,18 @@ function page({ title, description, body, jsonld, active, ogImage, extraHead = "
   <title>${esc(fullTitle)}</title>
   <meta name="description" content="${esc(description)}">
   <meta name="keywords" content="${esc(SITE.seo.keywords)}">
-  <link rel="canonical" href="${esc(SITE.domain)}${active}">
-  <link rel="alternate" hreflang="en" href="${esc(SITE.domain)}${active}">
-  <link rel="alternate" hreflang="x-default" href="${esc(SITE.domain)}${active}">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="canonical" href="${selfUrl}">
+  <link rel="alternate" hreflang="en" href="${selfUrl}">
+  <link rel="alternate" hreflang="x-default" href="${selfUrl}">
   <meta property="og:type" content="website">
   <meta property="og:title" content="${esc(fullTitle)}">
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:image" content="${esc(SITE.domain)}${og}">
-  <meta property="og:url" content="${esc(SITE.domain)}${active}">
+  <meta property="og:image:alt" content="${esc(fullTitle)}">
+  <meta property="og:url" content="${selfUrl}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${esc(fullTitle)}">
   <meta name="twitter:description" content="${esc(description)}">
@@ -519,7 +530,7 @@ function buildHome() {
       "availableLanguage": ["English", "Chinese"]
     }
   };
-  return page({ title: SITE.name, description: "Affordable dental tourism in China: implants, whitening and general care from licensed English-speaking dentists, paired with travel to Beijing and Guizhou.", body, jsonld, active: "/" });
+  return page({ title: SITE.name, description: "Affordable dental tourism in China: implants, whitening and general care from licensed English-speaking dentists, paired with travel to Beijing and Guizhou.", body, jsonld, active: "/", path: "/" });
 }
 
 /* ---- Services index ---- */
@@ -542,7 +553,7 @@ function buildServicesIndex() {
     <p class="notice" style="margin-top:26px">Prices are indicative ranges and vary by city and individual assessment. Your final quote is confirmed by a licensed dentist before any treatment.</p>
   </div></section>
   ${ctaBand()}`;
-  return page({ title: "Dental Services in China", description: "Dental implants, teeth whitening and general dental care in China at transparent prices — treatment plans and costs for international patients.", body, active: "/services/" });
+  return page({ title: "Dental Services in China", description: "Dental implants, teeth whitening and general dental care in China at transparent prices — treatment plans and costs for international patients.", body, active: "/services/", path: "/services/" });
 }
 
 /* ---- Service detail ---- */
@@ -589,7 +600,7 @@ function buildService(s) {
     "lastReviewed": new Date().toISOString().slice(0, 10),
     "about": { "@type": "MedicalProcedure", "name": s.name }
   };
-  return page({ title: s.name + " in China", description: s.summary, body, jsonld, active: "/services/" });
+  return page({ title: s.name + " in China", description: s.summary, body, jsonld, active: "/services/", path: "/services/" + s.slug + "/" });
 }
 
 /* ---- Destinations index ---- */
@@ -619,7 +630,7 @@ function buildDestinationsIndex() {
       "name": c.name
     }))
   };
-  return page({ title: "Dental Tourism Destinations in China", description: "Explore dental tourism destinations in China — Beijing and Guizhou (Xingyi, Kaili, Zunyi, Bijie, Liupanshui) with clinics, prices and travel guides.", body, jsonld, active: "/destinations/" });
+  return page({ title: "Dental Tourism Destinations in China", description: "Explore dental tourism destinations in China — Beijing and Guizhou (Xingyi, Kaili, Zunyi, Bijie, Liupanshui) with clinics, prices and travel guides.", body, jsonld, active: "/destinations/", path: "/destinations/" });
 }
 
 /* ---- City detail ---- */
@@ -731,7 +742,7 @@ async function buildCity(c) {
       }
     ]
   };
-  return page({ title: c.name + " Dental Tourism", description: c.tagline + " — licensed dental clinics and transparent treatment prices in " + c.name + ", China. Plan your dental trip with our local team.", body, jsonld, active: "/destinations/" });
+  return page({ title: c.name + " Dental Tourism", description: c.tagline + " — licensed dental clinics and transparent treatment prices in " + c.name + ", China. Plan your dental trip with our local team.", body, jsonld, active: "/destinations/", path: "/destinations/" + c.slug + "/" });
 }
 
 /* ---- About ---- */
@@ -810,7 +821,7 @@ function buildAbout() {
       "jobTitle": m.role
     }))
   };
-  return page({ title: "About Us — Dental Tourism in China", description: "Meet the China Dental Travel team and our founding clinic Jingzhou Dental Group — senior professionals coordinating affordable, verified dental care for international patients.", body, jsonld, active: "/about/" });
+  return page({ title: "About Us — Dental Tourism in China", description: "Meet the China Dental Travel team and our founding clinic Jingzhou Dental Group — senior professionals coordinating affordable, verified dental care for international patients.", body, jsonld, active: "/about/", path: "/about/" });
 }
 
 /* ---- Contact ---- */
@@ -865,7 +876,7 @@ function buildContact() {
       "availableLanguage": ["English", "Chinese"]
     }
   };
-  return page({ title: "Contact Us — Dental Treatment in China", description: "Contact China Dental Travel on WhatsApp or email — free treatment plans and price quotes for dental care in China within 24 hours.", body, jsonld, active: "/contact/" });
+  return page({ title: "Contact Us — Dental Treatment in China", description: "Contact China Dental Travel on WhatsApp or email — free treatment plans and price quotes for dental care in China within 24 hours.", body, jsonld, active: "/contact/", path: "/contact/" });
 }
 
 /* ---- FAQ ---- */
@@ -891,7 +902,7 @@ function buildFaq() {
       "acceptedAnswer": { "@type": "Answer", "text": f.a }
     }))
   };
-  return page({ title: "FAQ — Dental Tourism in China", description: "Dental tourism in China FAQ: safety, savings, visas, aftercare, treatment quality and pricing — answered for international patients.", body, jsonld, active: "/faq/" });
+  return page({ title: "FAQ — Dental Tourism in China", description: "Dental tourism in China FAQ: safety, savings, visas, aftercare, treatment quality and pricing — answered for international patients.", body, jsonld, active: "/faq/", path: "/faq/" });
 }
 
 /* ---- Pricing / Cost Comparison (USA) ---- */
@@ -995,7 +1006,7 @@ function buildPricing() {
       "acceptedAnswer": { "@type": "Answer", "text": "In the USA it typically ranges " + us + " self-pay; in China the typical range is " + cn + ". Final cost depends on your individual assessment and materials." }
     }))
   };
-  return page({ title: "Dental Costs in China vs USA — Price Comparison", description: "Compare dental treatment costs in China vs the USA: implants, crowns, root canals, whitening and more — with real budget examples and savings of 60–80%.", body, jsonld, active: "/pricing/" });
+  return page({ title: "Dental Costs in China vs USA — Price Comparison", description: "Compare dental treatment costs in China vs the USA: implants, crowns, root canals, whitening and more — with real budget examples and savings of 60–80%.", body, jsonld, active: "/pricing/", path: "/pricing/" });
 }
 
 /* ================= BLOG ================= */
@@ -1074,7 +1085,7 @@ function buildBlog(posts) {
   return page({
     title: "Dental Travel Blog — Guides & Patient Stories",
     description: "Guides and stories for dental tourists to China: implant costs, treatment explainers, travel tips and patient experiences.",
-    body, jsonld, active: "/blog/",
+    body, jsonld, active: "/blog/", path: "/blog/",
     extraHead: `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)} Blog" href="/feed.xml">`
   });
 }
@@ -1153,7 +1164,7 @@ function buildPost(p, allPosts) {
     });
   }
   return page({
-    title: p.title, description: p.excerpt, body, jsonld: graph, active: "/blog/", ogImage: p.cover,
+    title: p.title, description: p.excerpt, body, jsonld: graph, active: "/blog/", path: "/blog/" + p.slug + "/", ogImage: p.cover,
     extraHead: `<link rel="alternate" type="application/rss+xml" title="${esc(SITE.name)} Blog" href="/feed.xml">`
   });
 }
@@ -1192,9 +1203,22 @@ async function copyDir(src, dest) {
   }
 }
 
+/* ---------- favicon：位图（Google 与社交平台不识别 SVG）+ 矢量 ---------- */
+async function buildIcons() {
+  const png = (size) => encodePNG(size, size, drawIcon(size));
+  await writeFile(path.join(DIST, "favicon.svg"), iconSVG());
+  await writeFile(path.join(DIST, "favicon.ico"),
+    encodeICO([{ size: 32, data: png(32) }, { size: 48, data: png(48) }]));
+  await writeFile(path.join(DIST, "favicon-96x96.png"), png(96));
+  await writeFile(path.join(DIST, "apple-touch-icon.png"), png(180));
+}
+
 async function build() {
   await fs.rm(DIST, { recursive: true, force: true });
   await fs.mkdir(IMG, { recursive: true });
+
+  // favicon（必须落在 dist 根：浏览器默认请求 /favicon.ico）
+  await buildIcons();
 
   // assets (src/css + src/js -> dist/assets)
   await copyDir(SRC, path.join(DIST, "assets"));
@@ -1236,11 +1260,13 @@ async function build() {
   }
   await writeFile(path.join(DIST, "feed.xml"), buildRss(posts));
 
-  // 404
+  // 404 —— 必须 noindex：CloudFlare Pages 会把 /404.html 以 /404 路径以 200 状态返回，
+  // 不加 noindex 时 Google 可能把它当普通页面收录（软 404）。
   await writeFile(path.join(DIST, "404.html"), page({
     title: "Page not found", description: "The page you requested could not be found.",
     body: `<section style="padding:120px 0;text-align:center"><div class="container"><h1>404</h1><p class="lead-lg">We couldn't find that page.</p><a class="btn btn-primary" href="/">Back to home</a></div></section>`,
-    active: "/"
+    active: "/", path: "/404.html",
+    extraHead: `<meta name="robots" content="noindex, follow">`
   }));
 
   // sitemap
