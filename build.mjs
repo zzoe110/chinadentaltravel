@@ -982,7 +982,7 @@ function buildPricing() {
         <tbody>${trs}</tbody>
       </table>
     </div>
-    <p class="notice" style="margin-top:14px">Typical savings on treatment alone: <strong>60–80%</strong> on most procedures. Add flights and stay, and the trip still usually pays for itself on plans above ~$5,000.</p>
+    <p class="notice" style="margin-top:14px">Typical savings on treatment alone: <strong>40–70%</strong> on most procedures. Add flights and stay, and the trip still usually pays for itself on plans above ~$5,000.</p>
   </div></section>
 
   <section class="section-soft">
@@ -1011,7 +1011,7 @@ function buildPricing() {
       "acceptedAnswer": { "@type": "Answer", "text": "In the USA it typically ranges " + us + " self-pay; in China the typical range is " + cn + ". Final cost depends on your individual assessment and materials." }
     }))
   };
-  return page({ title: "Dental Costs in China vs USA — Price Comparison", description: "Compare dental treatment costs in China vs the USA: implants, crowns, root canals, whitening and more — with real budget examples and savings of 60–80%.", body, jsonld, active: "/pricing/", path: "/pricing/" });
+  return page({ title: "Dental Costs in China vs USA — Price Comparison", description: "Compare dental treatment costs in China vs the USA: implants, crowns, root canals, whitening and more — with real budget examples and savings of 40–70%.", body, jsonld, active: "/pricing/", path: "/pricing/" });
 }
 
 /* ================= BLOG ================= */
@@ -1099,10 +1099,14 @@ function buildPost(p, allPosts) {
   const tocHtml = p.toc.length
     ? `<nav class="post-toc" aria-label="Table of contents"><div class="toc-title">On this page</div><ul>${p.toc.map((t) => `<li class="toc-${t.level}"><a href="#${t.id}">${esc(t.text)}</a></li>`).join("")}</ul></nav>`
     : "";
-  const related = allPosts.filter((x) => x.slug !== p.slug && x.category === p.category).slice(0, 3);
+  /* 相关文章：优先同分类；分类下只有本篇时（如 Travel Tips 首发），回退到最新其他文章，
+     保证每篇文章底部都有内链（SEO 内链 + 读者继续阅读路径）。 */
+  const sameCat = allPosts.filter((x) => x.slug !== p.slug && x.category === p.category);
+  const others = allPosts.filter((x) => x.slug !== p.slug && x.category !== p.category);
+  const related = (sameCat.length ? sameCat : others).slice(0, 3);
   const relatedHtml = related.length
     ? `<section class="section-soft"><div class="container" style="max-width:900px">
-    <div class="section-head" style="text-align:left;margin-bottom:22px"><div class="eyebrow">Related</div><h2>More in ${esc(p.category)}</h2></div>
+    <div class="section-head" style="text-align:left;margin-bottom:22px"><div class="eyebrow">Related</div><h2>${sameCat.length ? "More in " + esc(p.category) : "More from the blog"}</h2></div>
     <div class="blog-grid related">${related.map(postCard).join("")}</div>
   </div></section>`
     : "";
