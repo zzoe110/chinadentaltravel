@@ -59,7 +59,7 @@
     ]
   },
   "medical": {
-    "advantages": "Liupanshui's partner clinic provides the group's care standards in the most climate-comfortable city in Guizhou — a smart choice for summer travellers."
+    "advantages": "Three clinics provide the group's care standards in the most climate-comfortable city in Guizhou — average summer temperatures around 19°C, which makes it a smart choice for recovery in the warm months. The Wumeng grassland and the Shuicheng scenic area are on the doorstep."
   },
   "prices": {
     "dental-implants": {
@@ -75,18 +75,5 @@
       "to": 280
     }
   },
-  "institutions": [
-    {
-      "name": "Jingzhou Dental — Liupanshui Clinic",
-      "nameZh": "京州口腔（六盘水院区）",
-      "image": null,
-      "doctors": [
-        {
-          "name": "Dr. He Tao",
-          "nameZh": "何涛 医生",
-          "image": null
-        }
-      ]
-    }
-  ]
+  "networkRegion": "liupanshui"
 }

@@ -59,7 +59,7 @@
     ]
   },
   "medical": {
-    "advantages": "Xingyi is where the Jingzhou Dental Group began. The clinic pairs provincial-leading equipment with the warmth of a community practice. Lower operating costs mean excellent value, while the serene surroundings support a calm recovery."
+    "advantages": "Xingyi is where the Jingzhou Dental Group began. Seven clinics now serve the prefecture — five across the city itself, plus Xingren and Zhenfeng within a short drive. That density matters for dental tourism: if one clinic is fully booked, you are not left waiting, and a second opinion is a street away rather than a flight. Lower operating costs mean excellent value, while the karst surroundings support a calm recovery."
   },
   "prices": {
     "dental-implants": {
@@ -75,23 +75,5 @@
       "to": 300
     }
   },
-  "institutions": [
-    {
-      "name": "Jingzhou Dental — Xingyi Main Clinic",
-      "nameZh": "京州口腔（兴义总院）",
-      "image": null,
-      "doctors": [
-        {
-          "name": "Dr. Wang Fang",
-          "nameZh": "王芳 医生",
-          "image": null
-        },
-        {
-          "name": "Dr. Chen Hao",
-          "nameZh": "陈浩 医生",
-          "image": null
-        }
-      ]
-    }
-  ]
+  "networkRegion": "qianxinan"
 }

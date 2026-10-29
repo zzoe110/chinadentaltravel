@@ -1,0 +1,538 @@
+{
+  "brands": [
+    {
+      "id": "jingzhou",
+      "name": "Jingzhou Dental",
+      "nameZh": "京州口腔",
+      "role": "Founding network",
+      "note": "Founding network of the platform — 25 clinics across Guizhou and Beijing, unified clinical standards, one English-speaking coordination team."
+    },
+    {
+      "id": "chifeng-jinmei",
+      "name": "Jinmei Dental",
+      "nameZh": "锦美口腔",
+      "role": "Partner brand",
+      "status": "planned",
+      "city": "Chifeng, Inner Mongolia",
+      "note": "Partner brand onboarding — reserved."
+    },
+    {
+      "id": "leshan-qichen",
+      "name": "Qichen Dental",
+      "nameZh": "启辰口腔",
+      "role": "Partner brand",
+      "status": "planned",
+      "city": "Leshan, Sichuan",
+      "note": "Partner brand onboarding — reserved."
+    },
+    {
+      "id": "hunan-xiangkou",
+      "name": "Xiangkou Dental",
+      "nameZh": "湘口口腔",
+      "role": "Partner brand",
+      "status": "planned",
+      "city": "Hunan",
+      "note": "Partner brand onboarding — reserved."
+    }
+  ],
+  "regions": [
+    {
+      "id": "qianxinan",
+      "name": "Qianxinan · Southwest Guizhou",
+      "nameZh": "黔西南",
+      "highlight": true,
+      "note": "Where the network began — the group's founding city and its widest local spread.",
+      "clinics": [
+        {
+          "name": "Xingyi Shenqi Main Hospital",
+          "nameZh": "兴义神奇总院",
+          "city": "Xingyi",
+          "cityZh": "兴义",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "G桔山街道 Shenqi West Road 1",
+          "phone": "+86 859 3371112",
+          "since": "2015",
+          "flagship": true,
+          "focus": [
+            "Implantology",
+            "Full-arch restoration",
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Xingyi Menglecheng",
+          "nameZh": "兴义梦乐城",
+          "city": "Xingyi",
+          "cityZh": "兴义",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Menglecheng Shopping Centre, 4F",
+          "phone": "+86 859 8615777",
+          "focus": [
+            "Implantology",
+            "Cosmetic dentistry"
+          ]
+        },
+        {
+          "name": "Xingyi Panjiang",
+          "nameZh": "兴义盘江",
+          "city": "Xingyi",
+          "cityZh": "兴义",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Panjiang South Road 14",
+          "phone": "+86 859 3371008",
+          "focus": [
+            "General dentistry",
+            "Pediatric dentistry"
+          ]
+        },
+        {
+          "name": "Xingyi Ecological City",
+          "nameZh": "兴义生态城",
+          "city": "Xingyi",
+          "cityZh": "兴义",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Wetland Park, Ecological City",
+          "phone": "+86 859 3371113",
+          "focus": [
+            "General dentistry",
+            "Teeth whitening"
+          ]
+        },
+        {
+          "name": "Xingyi Feiyang",
+          "nameZh": "兴义飞洋",
+          "city": "Xingyi",
+          "cityZh": "兴义",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Address to be confirmed",
+          "phone": null,
+          "focus": [
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Xingren",
+          "nameZh": "兴仁京州",
+          "city": "Xingren",
+          "cityZh": "兴仁",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "9 Shifu Middle Road, Xingren",
+          "phone": "+86 859 8813333",
+          "focus": [
+            "General dentistry",
+            "Orthodontics"
+          ]
+        },
+        {
+          "name": "Zhenfeng",
+          "nameZh": "贞丰京州",
+          "city": "Zhenfeng",
+          "cityZh": "贞丰",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Financial Park, Zhenfeng County",
+          "phone": "+86 859 6811111",
+          "focus": [
+            "General dentistry",
+            "Teeth whitening"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "kaili",
+      "name": "Kaili · Southeast Guizhou",
+      "nameZh": "凯里",
+      "highlight": true,
+      "note": "Five clinics in one city — the network's deepest single-city coverage.",
+      "clinics": [
+        {
+          "name": "Kaili Dashi Street",
+          "nameZh": "凯里大十字",
+          "city": "Kaili",
+          "cityZh": "凯里",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "3 Shaoshan South Road, Dashi Street",
+          "phone": "+86 855 8123000",
+          "flagship": true,
+          "focus": [
+            "Implantology",
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Kaili 083",
+          "nameZh": "凯里083",
+          "city": "Kaili",
+          "cityZh": "凯里",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "1 Wenhua North Road, 2F",
+          "phone": "+86 855 8736288",
+          "focus": [
+            "Orthodontics",
+            "Implantology"
+          ]
+        },
+        {
+          "name": "Kaili Orthodontics",
+          "nameZh": "凯里矫正",
+          "city": "Kaili",
+          "cityZh": "凯里",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Youzhuang Road, beside Gudou Mingmen",
+          "phone": "+86 855 8266988",
+          "focus": [
+            "Orthodontics"
+          ]
+        },
+        {
+          "name": "Kaili Huimin",
+          "nameZh": "凯里惠民",
+          "city": "Kaili",
+          "cityZh": "凯里",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "36 Qingping South Road",
+          "phone": "+86 855 5872888",
+          "focus": [
+            "General dentistry",
+            "Pediatric dentistry"
+          ]
+        },
+        {
+          "name": "Kaili Future City",
+          "nameZh": "凯里未来城",
+          "city": "Kaili",
+          "cityZh": "凯里",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Block 23, Future City",
+          "phone": "+86 855 8068988",
+          "focus": [
+            "General dentistry",
+            "Teeth whitening"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "zunyi",
+      "name": "Zunyi · North Guizhou",
+      "nameZh": "遵义",
+      "highlight": true,
+      "note": "Includes the Maotai trail — combine treatment with the spirits country.",
+      "clinics": [
+        {
+          "name": "Zunyi Guomao",
+          "nameZh": "遵义国贸",
+          "city": "Zunyi",
+          "cityZh": "遵义",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Nanjing Road, 2F",
+          "phone": "+86 851 27392888",
+          "flagship": true,
+          "focus": [
+            "Implantology",
+            "Cosmetic dentistry",
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Renhuai",
+          "nameZh": "仁怀京州",
+          "city": "Renhuai",
+          "cityZh": "仁怀",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "102 Taibai Road, Renhuai",
+          "phone": "+86 851 22280066",
+          "focus": [
+            "General dentistry",
+            "Teeth whitening"
+          ]
+        },
+        {
+          "name": "Renhuai Lide",
+          "nameZh": "仁怀立德",
+          "city": "Renhuai",
+          "cityZh": "仁怀",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "682 Guojiu South Road, Renhuai",
+          "phone": "+86 851 28951988",
+          "focus": [
+            "General dentistry"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "liupanshui",
+      "name": "Liupanshui · West Guizhou",
+      "nameZh": "六盘水",
+      "highlight": true,
+      "note": "China's 'Cool Capital' — the most comfortable summer recovery in the network.",
+      "clinics": [
+        {
+          "name": "Liupanshui Guomao",
+          "nameZh": "六盘水国贸",
+          "city": "Liupanshui",
+          "cityZh": "六盘水",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "57 Zhongshan Middle Road, 2F",
+          "phone": "+86 858 8118899",
+          "flagship": true,
+          "focus": [
+            "Implantology",
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Liupanshui Aimin",
+          "nameZh": "六盘水爱民",
+          "city": "Liupanshui",
+          "cityZh": "六盘水",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Huangtupo Street, opposite the city hospital",
+          "phone": "+86 858 8116868",
+          "focus": [
+            "General dentistry",
+            "Pediatric dentistry"
+          ]
+        },
+        {
+          "name": "Liupanshui Minghu",
+          "nameZh": "六盘水明湖",
+          "city": "Liupanshui",
+          "cityZh": "六盘水",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "1545 Minghu Road",
+          "phone": "+86 858 8337766",
+          "focus": [
+            "General dentistry",
+            "Teeth whitening"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bijie",
+      "name": "Bijie · Northwest Guizhou",
+      "nameZh": "毕节",
+      "highlight": true,
+      "note": "Highland scenery and the Zhijin Cave — a calm, low-cost recovery base.",
+      "clinics": [
+        {
+          "name": "Bijie Aimin",
+          "nameZh": "毕节爱民",
+          "city": "Bijie",
+          "cityZh": "毕节",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Yongjun Road, beside Aimin Square",
+          "phone": "+86 857 7100076",
+          "flagship": true,
+          "focus": [
+            "Implantology",
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Bijie Zhaoshang",
+          "nameZh": "毕节招商",
+          "city": "Bijie",
+          "cityZh": "毕节",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Zhaoshang Garden City, Block 3, 2F",
+          "phone": "+86 857 8735166",
+          "focus": [
+            "Orthodontics",
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Weining",
+          "nameZh": "威宁京州",
+          "city": "Weining",
+          "cityZh": "威宁",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Weining Convention Centre, Wusa Stadium",
+          "phone": "+86 857 6697666",
+          "focus": [
+            "General dentistry"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "guiyang",
+      "name": "Guiyang · Provincial Capital",
+      "nameZh": "贵阳",
+      "highlight": false,
+      "note": "Provincial capital access — international-standard infrastructure and flight routes.",
+      "clinics": [
+        {
+          "name": "Guiyang Lanbo Bay",
+          "nameZh": "贵阳京州（蓝波湾院区）",
+          "city": "Guiyang",
+          "cityZh": "贵阳",
+          "brand": "jingzhou",
+          "status": "planned",
+          "address": "Lanbo Bay No.1, Xintianzhai, Wudang District",
+          "phone": "+86 851 86451116",
+          "focus": [
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Guiyang Xintianzhai",
+          "nameZh": "贵阳京州（新添寨院区）",
+          "city": "Guiyang",
+          "cityZh": "贵阳",
+          "brand": "jingzhou",
+          "status": "planned",
+          "address": "Xintian Commercial Centre 5-2-6, Wudang District",
+          "phone": "+86 851 86840016",
+          "focus": [
+            "General dentistry"
+          ]
+        },
+        {
+          "name": "Xiuwen",
+          "nameZh": "修文京州",
+          "city": "Xiuwen",
+          "cityZh": "修文",
+          "brand": "jingzhou",
+          "status": "planned",
+          "address": "Xiuwen County, Guiyang",
+          "phone": "+86 851 82323894",
+          "focus": [
+            "General dentistry"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "qiannan",
+      "name": "Qiannan · South Guizhou",
+      "nameZh": "黔南",
+      "highlight": false,
+      "note": "Qiannan prefecture coverage — one clinic in the region centre.",
+      "clinics": [
+        {
+          "name": "Weng'an",
+          "nameZh": "瓮安京州",
+          "city": "Weng'an",
+          "cityZh": "瓮安",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Jinmei Times Square, Weng'an County",
+          "phone": "+86 854 2636633",
+          "focus": [
+            "General dentistry",
+            "Pediatric dentistry"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "beijing",
+      "name": "Beijing · National Capital",
+      "nameZh": "北京",
+      "highlight": true,
+      "note": "The platform's flagship destination — international flight routes and hospital-grade infrastructure.",
+      "clinics": [
+        {
+          "name": "Beijing Huixin",
+          "nameZh": "北京惠欣",
+          "city": "Beijing",
+          "cityZh": "北京",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "17 Anyuan Road, Chaoyang District, 3F",
+          "phone": "+86 10 64987020",
+          "flagship": true,
+          "focus": [
+            "Implantology",
+            "Cosmetic dentistry",
+            "Full-arch restoration"
+          ]
+        },
+        {
+          "name": "Beijing Jingxi",
+          "nameZh": "北京京熙",
+          "city": "Beijing",
+          "cityZh": "北京",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "17 Shidai Huayuan South Road, Shijingshan District",
+          "phone": "+86 10 88229920",
+          "focus": [
+            "Implantology",
+            "General dentistry"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "yunnan",
+      "name": "Zhenxiong · Yunnan",
+      "nameZh": "云南",
+      "highlight": false,
+      "note": "Adjacent Zhaotong prefecture — same clinical standards, on the way to the Dali and Lijiang routes.",
+      "clinics": [
+        {
+          "name": "Zhenxiong",
+          "nameZh": "镇雄京州",
+          "city": "Zhenxiong",
+          "cityZh": "镇雄",
+          "brand": "jingzhou",
+          "status": "operating",
+          "address": "Longteng Jincheng Xianglongyuan, Building 1, No.14",
+          "phone": "+86 870 8898788",
+          "focus": [
+            "General dentistry"
+          ]
+        }
+      ]
+    }
+  ],
+  "plannedRegions": [
+    {
+      "id": "chifeng",
+      "name": "Chifeng, Inner Mongolia",
+      "nameZh": "内蒙古赤峰",
+      "brand": "chifeng-jinmei",
+      "note": "Partner brand onboarding — reserved for a future release."
+    },
+    {
+      "id": "leshan",
+      "name": "Leshan, Sichuan",
+      "nameZh": "四川乐山",
+      "brand": "leshan-qichen",
+      "note": "Partner brand onboarding — reserved for a future release."
+    },
+    {
+      "id": "hunan",
+      "name": "Hunan",
+      "nameZh": "湖南",
+      "brand": "hunan-xiangkou",
+      "note": "Partner brand onboarding — reserved for a future release."
+    }
+  ]
+}

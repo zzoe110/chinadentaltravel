@@ -59,7 +59,7 @@
     ]
   },
   "medical": {
-    "advantages": "Bijie's partner clinic offers the group's clinical standards in a tranquil, low-cost setting surrounded by nature — perfect for a restful recovery."
+    "advantages": "Three clinics serve Bijie and Weining, offering the group's clinical standards in a tranquil, low-cost setting surrounded by nature — perfect for a restful recovery. Zhijin Cave, Baili Azalea and the Caohai bird reserve are all within reach."
   },
   "prices": {
     "dental-implants": {
@@ -75,18 +75,5 @@
       "to": 280
     }
   },
-  "institutions": [
-    {
-      "name": "Jingzhou Dental — Bijie Clinic",
-      "nameZh": "京州口腔（毕节院区）",
-      "image": null,
-      "doctors": [
-        {
-          "name": "Dr. Sun Lei",
-          "nameZh": "孙磊 医生",
-          "image": null
-        }
-      ]
-    }
-  ]
+  "networkRegion": "bijie"
 }

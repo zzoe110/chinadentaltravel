@@ -59,7 +59,7 @@
     ]
   },
   "medical": {
-    "advantages": "Zunyi's partner clinic delivers the group's standard of care with the bonus of a slower, more affordable city. Ideal for travellers combining treatment with the Moutai trail."
+    "advantages": "Three clinics serve Zunyi and Renhuai, delivering the group's standard of care with the bonus of a slower, more affordable city. Ideal for travellers combining treatment with the Maotai trail — Zunyi is roughly two hours from the distillery, and Renhuai is the home of Maotai town itself."
   },
   "prices": {
     "dental-implants": {
@@ -75,18 +75,5 @@
       "to": 290
     }
   },
-  "institutions": [
-    {
-      "name": "Jingzhou Dental — Zunyi Clinic",
-      "nameZh": "京州口腔（遵义院区）",
-      "image": null,
-      "doctors": [
-        {
-          "name": "Dr. Zhao Min",
-          "nameZh": "赵敏 医生",
-          "image": null
-        }
-      ]
-    }
-  ]
+  "networkRegion": "zunyi"
 }

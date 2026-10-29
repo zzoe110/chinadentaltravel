@@ -5,7 +5,7 @@
   "logoText": "China Dental Travel",
   "tagline": "World-Class Dental Care, Unforgettable China",
   "defaultLang": "en",
-  "description": "China Dental Travel connects international patients with licensed, top-tier dental clinics across China — combining affordable, high-quality treatment with curated travel experiences in Beijing and the scenic province of Guizhou.",
+  "description": "China Dental Travel connects international patients with vetted dental clinics across China — combining affordable, high-quality treatment with curated travel experiences in Beijing and the scenic province of Guizhou.",
   "organization": {
     "name": "China Dental Travel",
     "legalName": "China Dental Travel International Medical Tourism Platform",
@@ -26,7 +26,7 @@
   },
   "seo": {
     "titleSuffix": " | China Dental Travel",
-    "keywords": "dental tourism China, dental implants China cost, affordable dental implants, teeth whitening China, dental care Beijing, dental clinic Guizhou, medical tourism China, dental vacation China, dentist for foreigners China, English speaking dentist China, implant dentist Xingyi, dental travel agency",
+    "keywords": "dental tourism China, dental implants China cost, affordable dental implants, teeth whitening China, dental care Beijing, dental clinic Guizhou, medical tourism China, dental vacation China, dentist for foreigners China, English speaking dentist China, implant dentist Xingyi, dental travel agency, dental clinic network China, dental tourism clinic Guizhou province",
     "ogImage": "/assets/img/hl-beijing-forbidden.jpg",
     "twitter": ""
   },
@@ -39,6 +39,7 @@
   "nav": [
     { "label": "Home", "href": "/" },
     { "label": "Services", "href": "/services/" },
+    { "label": "Network", "href": "/network/" },
     { "label": "Destinations", "href": "/destinations/" },
     { "label": "Pricing", "href": "/pricing/" },
     { "label": "Blog", "href": "/blog/" },
@@ -55,13 +56,13 @@
     },
     {
       "icon": "🏥",
-      "title": "Licensed & Accredited",
-      "text": "Every partner clinic holds a valid Chinese Medical Institution License and employs board-certified dentists. We verify before we list."
+      "title": "A Vetted Clinic Network",
+      "text": "{CLINIC_COUNT} clinics across {REGION_COUNT} regions of China. Every one holds a valid Chinese Medical Institution License and works to the same clinical protocols. We review credentials before listing — not the other way round."
     },
     {
-      "icon": "🏞️",
-      "title": "Turn Recovery Into a Trip",
-      "text": "Heal in Guizhou's karst wonderlands or explore imperial Beijing — your treatment doubles as an unforgettable holiday."
+      "icon": "🗺️",
+      "title": "One Coordinator, Nationwide",
+      "text": "One English-speaking team books across the whole network, so your appointments follow your travel route instead of fighting it."
     },
     {
       "icon": "🌐",

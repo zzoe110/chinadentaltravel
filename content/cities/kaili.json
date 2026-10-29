@@ -59,7 +59,7 @@
     ]
   },
   "medical": {
-    "advantages": "Kaili's partner clinic offers modern equipment in a calm, low-cost setting. It is an excellent choice for travellers who want treatment plus deep cultural immersion away from the big cities."
+    "advantages": "Kaili is the network's deepest single-city coverage — five clinics in one prefecture capital. For international patients this is the practical difference between a workable plan and a difficult one: appointments can be rebooked locally within hours, and if your treatment needs a different discipline, it is usually available the same week rather than the same quarter. It is also an excellent choice for travellers who want deep cultural immersion away from the big cities."
   },
   "prices": {
     "dental-implants": {
@@ -75,18 +75,5 @@
       "to": 280
     }
   },
-  "institutions": [
-    {
-      "name": "Jingzhou Dental — Kaili Clinic",
-      "nameZh": "京州口腔（凯里院区）",
-      "image": null,
-      "doctors": [
-        {
-          "name": "Dr. Wu Jun",
-          "nameZh": "吴军 医生",
-          "image": null
-        }
-      ]
-    }
-  ]
+  "networkRegion": "kaili"
 }

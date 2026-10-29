@@ -59,7 +59,7 @@
     ]
   },
   "medical": {
-    "advantages": "Beijing hosts some of China's most advanced dental hospitals and private clinics, with specialists trained internationally and equipment on par with any global capital. Our partner institution here offers implantology, cosmetic and general dentistry under one roof, with English-speaking coordinators for every visit."
+    "advantages": "Beijing hosts some of China's most advanced dental hospitals and private clinics, with specialists trained internationally and equipment on par with any global capital. Two Jingzhou Dental clinics operate here — both in the city proper, both reachable directly from the international airport corridor. Our coordination team handles every visit, so you never navigate a Chinese hospital system alone."
   },
   "prices": {
     "dental-implants": {
@@ -75,23 +75,5 @@
       "to": 400
     }
   },
-  "institutions": [
-    {
-      "name": "Jingzhou Dental — Beijing Branch",
-      "nameZh": "京州口腔（北京院区）",
-      "image": null,
-      "doctors": [
-        {
-          "name": "Dr. Li Wei",
-          "nameZh": "李伟 医生",
-          "image": null
-        },
-        {
-          "name": "Dr. Sarah Chen",
-          "nameZh": "陈莎 医生",
-          "image": null
-        }
-      ]
-    }
-  ]
+  "networkRegion": "beijing"
 }
