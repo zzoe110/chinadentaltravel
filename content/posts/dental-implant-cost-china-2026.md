@@ -36,7 +36,7 @@ In China, a quoted "single implant" price usually includes all three. Always con
 | All-on-4 fixed bridge (full arch) | $8,000 – $17,000 | $20,000 – $30,000 | Implant brand & bridge |
 | Implant-supported denture (full arch) | $3,000 – $8,000 | $8,000 – $18,000 | Number of implants |
 
-> Typical savings on the implant procedure alone are **60–75%** versus US prices. Add flights and accommodation, and most full-arch plans still save thousands.
+> Typical savings on the implant procedure alone are **40–70%** versus US prices. Add flights and accommodation, and most full-arch plans still save thousands.
 
 ## What drives the final price
 

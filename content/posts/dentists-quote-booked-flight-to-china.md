@@ -3,7 +3,7 @@ title: 'My dentist gave me a quote. Then I booked a flight to China.'
 titleZh: 我的牙医报了个价，然后我订了飞中国的机票
 slug: dentists-quote-booked-flight-to-china
 date: 2026-09-05T06:30:00.000Z
-category: Stories
+category: Patient Stories
 excerpt: One dental quote in the US can cost more than a flight to Beijing — and the implant. Here's the honest decision path real overseas patients follow, from the first shocking quote to the day they land in China, including every worry you'll want answered first.
 cover: /assets/img/hl-beijing-greatwall.jpg
 coverAlt: The Great Wall of China near Beijing
@@ -28,7 +28,7 @@ faq:
 
 You walk out of the dental office clutching a treatment plan that reads like a car payment. This isn't the opening of a story — it's an ordinary Tuesday for patients across the US, UK and Australia. A single self-pay implant runs **$3,000–$6,000 in the United States**, easily tops **£2,500 at a UK private clinic**, and full-arch reconstruction quotes in Australia can rival the price of a used car.
 
-Then someone tells you: **the same implant brands — Straumann, Nobel Biocare, Osstem — placed by licensed oral surgeons, cost $800–$2,800 in China.**
+Then someone tells you: **the same implant brands — Straumann, Nobel Biocare, Osstem — placed by licensed oral surgeons, cost $1,100–$2,800 in China.**
 
 Your first reaction probably isn't "great!" It's *"China? Is that… safe?"*
 
@@ -70,7 +70,7 @@ We don't hide from arithmetic — including the part where the trip isn't worth 
 
 | Treatment | US self-pay | China | You save |
 | --- | --- | --- | --- |
-| Single implant | $3,000 – $6,000 | $800 – $2,800 | ~60–75% |
+| Single implant | $3,000 – $6,000 | $1,100 – $2,800 | ~40–70% |
 | All-on-4 full arch (per jaw) | $20,000 – $30,000 | $8,000 – $17,000 | $12,000+ |
 
 - **One implant:** flights and hotels can erase the difference. Honestly — a dedicated trip may not pay off.
