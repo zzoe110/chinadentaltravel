@@ -278,6 +278,16 @@ const cities = await readDirJSON(path.join(CONTENT, "cities"));
 const featured = cities.filter((c) => c.featured);
 const faqs = (await readJSON(path.join(CONTENT, "faq.json"))).items;
 const friendLinks = (await readJSON(path.join(CONTENT, "links.json"))).links || [];
+/* 网点网络：平台化定位的实体数据。brands 支持多品牌（京州口腔为发起网络，
+   兄弟单位品牌预留 status=planned，不对外展示）；前台只展示 status=operating 的门店。 */
+const NET = await readJSON(path.join(CONTENT, "network.json"));
+const BRAND_BY_ID = Object.fromEntries((NET.brands || []).map((b) => [b.id, b]));
+const NETWORK_REGIONS = NET.regions || [];
+/* 在营门店（前台口径）——planned 的不计入任何对外数字 */
+const CLINICS = NETWORK_REGIONS.flatMap((r) =>
+  (r.clinics || []).filter((c) => c.status === "operating").map((c) => ({ ...c, region: r }))
+);
+const REGION_BY_ID = Object.fromEntries(NETWORK_REGIONS.map((r) => [r.id, r]));
 const YEAR = new Date().getFullYear();
 const WA = SITE.contact.whatsapp;
 const WA_LINK = "https://wa.me/" + WA.replace(/[^0-9]/g, "");
@@ -417,13 +427,56 @@ function ctaBand() {
 
 /* ================= PAGES ================= */
 
+/* ---------- 网点渲染（平台化核心组件） ---------- */
+/* 单张门店卡：品牌名 + 门店名 + 城市 + 专长标签。
+   注意：不输出地址与电话——平台红线是线索只进平台，机构不直接接触患者。
+   地址电话保留在 content/network.json 数据层，供内部与后续对接使用。 */
+function clinicCard(c, opts = {}) {
+  const brand = BRAND_BY_ID[c.brand] || {};
+  const focus = (c.focus || []).map((f) => `<span class="clinic-focus">${esc(f)}</span>`).join("");
+  return `
+    <div class="clinic-card${c.flagship ? " flagship" : ""}">
+      <div class="clinic-card-head">
+        <span class="clinic-brand">${esc(brand.name || c.brand)}</span>
+        ${c.flagship ? '<span class="clinic-flag">Flagship</span>' : ""}
+      </div>
+      <h4>${esc(c.name)}</h4>
+      <div class="clinic-city">${esc(c.cityZh || c.city)}${c.since ? ` · Est. ${esc(c.since)}` : ""}</div>
+      ${focus ? `<div class="clinic-focus-list">${focus}</div>` : ""}
+      ${opts.note ? `<p class="clinic-note">${esc(opts.note)}</p>` : ""}
+    </div>`;
+}
+
+/* 一个区域分组（含该区在营门店） */
+function regionBlock(r, opts = {}) {
+  const list = (r.clinics || []).filter((c) => c.status === "operating");
+  if (!list.length) return "";
+  const cards = list.map((c) => clinicCard(c, opts)).join("");
+  return `
+    <div class="net-region" id="region-${esc(r.id)}">
+      <div class="net-region-head">
+        <div>
+          <h3>${esc(r.name)}</h3>
+          <div class="net-region-zh">${esc(r.nameZh)} · ${list.length} ${list.length === 1 ? "clinic" : "clinics"}</div>
+        </div>
+      </div>
+      ${r.note ? `<p class="net-region-note">${esc(r.note)}</p>` : ""}
+      <div class="clinic-grid">${cards}</div>
+    </div>`;
+}
+
 /* ---- Home ---- */
 function buildHome() {
+  /* whyChina 文案支持 {CLINIC_COUNT} / {REGION_COUNT} 占位符，
+     构建时按真实网点数据注入，避免后台改门店后数字失真。 */
+  const fillTokens = (s) => String(s || "")
+    .replace(/\{CLINIC_COUNT\}/g, CLINICS.length)
+    .replace(/\{REGION_COUNT\}/g, NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length);
   const why = siteData.whyChina.map((w) => `
     <div class="card">
       <div class="ic">${w.icon}</div>
       <h3>${esc(w.title)}</h3>
-      <p>${esc(w.text)}</p>
+      <p>${esc(fillTokens(w.text))}</p>
     </div>`).join("");
 
   const svcCards = services.map((s) => `
@@ -465,8 +518,8 @@ function buildHome() {
         <a class="btn btn-outline" style="color:#fff;border-color:#fff" href="/destinations/">Explore Destinations</a>
       </div>
       <div class="hero-badges">
-        <div><strong>6</strong>Curated destinations</div>
-        <div><strong>3</strong>Core treatments</div>
+        <div><strong>${CLINICS.length}</strong>Clinics</div>
+        <div><strong>${NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length}</strong>Regions</div>
         <div><strong>40–70%</strong>Typical savings</div>
         <div><strong>16 yrs</strong>Clinical heritage</div>
       </div>
@@ -491,6 +544,27 @@ function buildHome() {
         <h2>Dental treatments we coordinate</h2>
       </div>
       <div class="grid grid-3">${svcCards}</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Clinic Network</div>
+        <h2>${CLINICS.length} clinics, ${NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length} regions, one coordinator</h2>
+        <p>Our network spans Guizhou's prefectures and Beijing — so your appointments can be scheduled around your travel route, not against it.</p>
+      </div>
+      <div class="net-preview">
+        ${NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).map((r) => {
+          const list = r.clinics.filter((c) => c.status === "operating");
+          return `<a class="net-preview-item" href="/network/#region-${esc(r.id)}">
+            <span class="net-preview-zh">${esc(r.nameZh)}</span>
+            <span class="net-preview-n">${list.length}</span>
+            <span class="net-preview-en">${esc(r.name)}</span>
+          </a>`;
+        }).join("")}
+      </div>
+      <div class="center" style="margin-top:30px"><a class="btn btn-outline" href="/network/">See the full clinic network</a></div>
     </div>
   </section>
 
@@ -533,9 +607,15 @@ function buildHome() {
       "contactType": "customer service",
       "areaServed": "Worldwide",
       "availableLanguage": ["English", "Chinese"]
-    }
+    },
+    "makesOffer": services.map((s) => ({
+      "@type": "Offer",
+      "itemOffered": { "@type": "Service", "name": s.name },
+      "priceCurrency": "USD",
+      "price": s.priceFrom
+    }))
   };
-  return page({ title: SITE.name, description: "Affordable dental tourism in China: implants, whitening and general care from licensed English-speaking dentists, paired with travel to Beijing and Guizhou.", body, jsonld, active: "/", path: "/" });
+  return page({ title: SITE.name, description: "Dental tourism in China: " + CLINICS.length + " vetted clinics across " + NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length + " regions, coordinated by one English-speaking team. Implants, whitening and general care with transparent pricing, paired with travel to Beijing and Guizhou.", body, jsonld, active: "/", path: "/" });
 }
 
 /* ---- Services index ---- */
@@ -638,6 +718,136 @@ function buildDestinationsIndex() {
   return page({ title: "Dental Tourism Destinations in China", description: "Explore dental tourism destinations in China — Beijing and Guizhou (Xingyi, Kaili, Zunyi, Bijie, Liupanshui) with clinics, prices and travel guides.", body, jsonld, active: "/destinations/", path: "/destinations/" });
 }
 
+/* ---- Clinic Network（平台网点总览） ---- */
+function buildNetwork() {
+  const regionCount = NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length;
+  const gzRegions = NETWORK_REGIONS.filter((r) => r.id !== "beijing" && r.id !== "yunnan" && (r.clinics || []).some((c) => c.status === "operating")).length;
+  const gzClinics = CLINICS.filter((c) => c.region.id !== "beijing" && c.region.id !== "yunnan").length;
+
+  /* 区域跳转条 */
+  const jumps = NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).map((r) =>
+    `<a href="#region-${esc(r.id)}">${esc(r.nameZh)} <span>${(r.clinics || []).filter((c) => c.status === "operating").length}</span></a>`
+  ).join("");
+
+  const blocks = NETWORK_REGIONS.map((r) => regionBlock(r)).join("");
+
+  /* 平台机制说明——为什么是平台而不是单家诊所 */
+  const howItWorks = [
+    {
+      ic: "🗺️",
+      h: "One network, many cities",
+      p: `You are not locked into a single clinic. Our ${CLINICS.length} clinics span ${regionCount} regions, so a treatment plan can be scheduled around your travel route — start in one city, continue in another, and stay inside one clinical standard throughout.`
+    },
+    {
+      ic: "🔍",
+      h: "Every clinic vetted, not listed on request",
+      p: "Each clinic in the network holds a valid Chinese Medical Institution License and works to the same clinical protocols. We review licenses and clinical records before a clinic joins — we do not accept listings on request."
+    },
+    {
+      ic: "💬",
+      h: "One coordinator, every clinic",
+      p: "You deal with a single English-speaking coordination team on WhatsApp, email and video call. They hold your records, book across clinics, and stay reachable after you fly home. You never coordinate between hospitals yourself."
+    },
+    {
+      ic: "🛡️",
+      h: "Records that travel with you",
+      p: "Digital scans, X-rays and your aftercare plan are organised centrally, so a follow-up in another city or another province is a continuation — not a restart."
+    }
+  ].map((x) => `
+    <div class="card">
+      <div class="ic">${x.ic}</div>
+      <h3>${esc(x.h)}</h3>
+      <p>${esc(x.p)}</p>
+    </div>`).join("");
+
+  const body = `
+  <section class="detail-hero"><div class="container">
+    <div class="breadcrumb" style="color:#cfe6ff"><a href="/" style="color:#cfe6ff">Home</a> / <span>Clinic Network</span></div>
+    <h1>Our Clinic Network</h1>
+    <p class="tagline">${CLINICS.length} clinics across ${regionCount} regions of China — coordinated as one network, planned around your trip.</p>
+    <div class="hero-badges" style="margin-top:22px">
+      <div><strong>${CLINICS.length}</strong>Clinics</div>
+      <div><strong>${regionCount}</strong>Regions</div>
+      <div><strong>${gzRegions}</strong>Guizhou prefectures</div>
+      <div><strong>40–70%</strong>Typical savings</div>
+    </div>
+  </div></section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Why a network matters</div>
+        <h2>One coordinator, ${CLINICS.length} clinics, ${regionCount} regions</h2>
+        <p>International dental travel goes wrong for predictable reasons: appointments clash, one clinic cannot handle a complex case, and nobody is accountable when a plan changes. Network coverage is how we remove those failure points.</p>
+      </div>
+      <div class="grid grid-4">${howItWorks}</div>
+    </div>
+  </section>
+
+  <section class="section-soft">
+    <div class="container">
+      <div class="section-head" style="text-align:left">
+        <div class="eyebrow">Guizhou depth</div>
+        <h2>${gzClinics} clinics across ${gzRegions} Guizhou prefectures</h2>
+        <p>Guizhou is where our founding network grew, and it is where the density is. Travelling inside a single province of karst mountains, Miao villages and cool highland towns means your appointments cluster geographically — shorter transfers, easier follow-ups, and recovery in scenery that genuinely helps.</p>
+      </div>
+      <div class="net-jump">${jumps}</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head" style="text-align:left">
+        <div class="eyebrow">Full listing</div>
+        <h2>Every clinic in the network</h2>
+        <p>Each card lists the clinic, its city and the treatments it focuses on. Tell us what you need and we will match you to the right clinic and the right city.</p>
+      </div>
+      ${blocks}
+    </div>
+  </section>
+
+  <section class="section-soft">
+    <div class="container" style="max-width:900px">
+      <div class="section-head" style="text-align:left">
+        <div class="eyebrow">Open network</div>
+        <h2>A platform, not a single clinic group</h2>
+        <p>China Dental Travel was founded by a dental group, but it is built to be a platform. Our founding network is the largest operator in the network today; qualified clinics in other provinces join on the same licensing, clinical and coordination standards. This means you are never negotiating with a single clinic — you are dealing with a network that has to work for you.</p>
+      </div>
+      <div class="grid grid-3" style="margin-top:22px">
+        <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:6px">Founding network</h3><p style="color:var(--muted);font-size:14px">${CLINICS.length} clinics operating across Guizhou and Beijing, with unified clinical standards and a single English-speaking coordination team.</p></div>
+        <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:6px">Partner clinics</h3><p style="color:var(--muted);font-size:14px">Independently operated clinics that meet the same licensing, clinical and aftercare standards. Every one is reviewed before it appears here.</p></div>
+        <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:6px">For clinics</h3><p style="color:var(--muted);font-size:14px">If your clinic meets our standards and wants access to international dental travellers, contact us to discuss joining the network.</p></div>
+      </div>
+    </div>
+  </section>
+
+  ${ctaBand()}`;
+
+  const jsonld = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ItemList",
+        "name": "China Dental Travel clinic network",
+        "numberOfItems": CLINICS.length,
+        "itemListElement": CLINICS.map((c, i) => ({
+          "@type": "ListItem", "position": i + 1,
+          "name": c.name,
+          "url": SITE.domain + "/network/#region-" + c.region.id
+        }))
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": SITE.domain + "/" },
+          { "@type": "ListItem", "position": 2, "name": "Clinic Network", "item": SITE.domain + "/network/" }
+        ]
+      }
+    ]
+  };
+  return page({ title: "Clinic Network — " + CLINICS.length + " Dental Clinics Across China", description: "Explore the China Dental Travel clinic network — " + CLINICS.length + " vetted dental clinics across " + regionCount + " regions of China, with " + gzRegions + " Guizhou prefectures covered. One coordinator, one standard of care.", body, jsonld, active: "/network/", path: "/network/" });
+}
+
 /* ---- City detail ---- */
 async function buildCity(c) {
   const hl = c.tourism.highlights.map((h, i) => `
@@ -649,31 +859,10 @@ async function buildCity(c) {
   const itin = c.tourism.itinerary.map((d) => `
     <li data-day="${esc(d.day)}"><h4>${esc(d.title)}</h4><p>${esc(d.description)}</p></li>`).join("");
 
-  const inst = c.institutions.map((inst, ii) => {
-    const docs = (inst.doctors || []).map((doc, j) => `
-      <div class="doctor">
-        ${media(doc.image, doc.name, "", { key: "doc-" + c.slug + "-" + ii + "-" + j })}
-        <div>
-          <h5>${esc(doc.name)}</h5>
-          <div class="role">${esc(doc.nameZh || "")}</div>
-        </div>
-      </div>`).join("");
-    const instMedia = media(inst.image, inst.name, "", { key: "inst-" + c.slug + "-" + ii });
-    return `
-    <div class="institution">
-      <div class="head"><h4>${esc(inst.name)} <span style="font-weight:400;font-size:.9rem;color:var(--muted)">${esc(inst.nameZh || "")}</span></h4></div>
-      <div class="body">
-        <div>
-          ${instMedia}
-        </div>
-        <div>
-          <h5 style="margin:0 0 10px">Medical team</h5>
-          ${docs || '<p style="color:var(--muted);font-size:14px">Details coming soon.</p>'}
-        </div>
-      </div>
-    </div>`;
-  }).join("");
-
+  /* 医疗资源 = 该区域在营门店清单（不再展示医生个人资料） */
+  const region = REGION_BY_ID[c.networkRegion];
+  const inst = region ? regionBlock(region) : "";
+  const regionCount = region ? (region.clinics || []).filter((x) => x.status === "operating").length : 0;
   // price table
   const priceRows = services.map((s) => {
     const p = c.prices[s.slug] || {};
@@ -701,10 +890,13 @@ async function buildCity(c) {
 
   <section class="block alt">
     <div class="container">
-      <div class="block-title green"><span class="badge">2</span><h2>Medical Resources</h2></div>
+      <div class="block-title green"><span class="badge">2</span><h2>Medical Network</h2></div>
       <p class="lead-lg">${esc(c.medical.advantages)}</p>
-      <h3 style="margin-top:24px">Partner clinics</h3>
+      <h3 style="margin-top:24px">Clinics in this region${regionCount ? ` <span style="font-weight:400;font-size:.9rem;color:var(--muted)">(${regionCount})</span>` : ""}</h3>
       ${inst}
+      <div style="margin-top:26px">
+        <a class="btn btn-outline" href="/network/">See the full clinic network</a>
+      </div>
     </div>
   </section>
 
@@ -722,9 +914,11 @@ async function buildCity(c) {
     </div>
   </section>`;
 
-  const localBiz = c.institutions.map((inst) => ({
+  const localBiz = (region ? (region.clinics || []).filter((x) => x.status === "operating") : []).map((inst) => ({
     "@type": "MedicalOrganization",
-    "name": inst.name
+    "name": inst.name,
+    "parentOrganization": { "@type": "Organization", "name": (BRAND_BY_ID[inst.brand] || {}).name || "China Dental Travel" },
+    "medicalSpecialty": inst.focus || []
   }));
   const jsonld = {
     "@context": "https://schema.org",
@@ -747,7 +941,7 @@ async function buildCity(c) {
       }
     ]
   };
-  return page({ title: c.name + " Dental Tourism", description: c.tagline + " — licensed dental clinics and transparent treatment prices in " + c.name + ", China. Plan your dental trip with our local team.", body, jsonld, active: "/destinations/", path: "/destinations/" + c.slug + "/" });
+  return page({ title: c.name + " Dental Tourism", description: c.tagline + " — " + regionCount + " clinics in " + c.name + " with transparent treatment prices, coordinated by one English-speaking team. Plan your dental trip with our local coordinators.", body, jsonld, active: "/destinations/", path: "/destinations/" + c.slug + "/" });
 }
 
 /* ---- About ---- */
@@ -785,18 +979,21 @@ function buildAbout() {
       </div>
     </div>`).join("");
 
+  const regionCount = NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length;
   const body = `
   <section class="detail-hero"><div class="container">
     <h1>About China Dental Travel</h1>
-    <p class="tagline">An information & referral platform for international dental patients.</p>
+    <p class="tagline">A clinic network and coordination platform for international dental patients.</p>
   </div></section>
   <section><div class="container">
-    <div class="block-title"><span class="badge">✚</span><h2>${esc(SITE.organization.founderClinic)} — our founding clinic</h2></div>
-    <p class="lead-lg" style="max-width:900px;margin-bottom:16px">China Dental Travel connects overseas patients with licensed, high-quality dental care in China — and turns necessary treatment into an extraordinary trip. Our founding and preferred clinic, ${esc(SITE.organization.founderClinic)}, brings 16 years of clinical heritage across more than 20 locations. We also curate and verify partner institutions in other provinces — every clinic on the platform holds a valid Chinese Medical Institution License, verified before we list.</p>
+    <div class="block-title"><span class="badge">✚</span><h2>A network first, a platform second</h2></div>
+    <p class="lead-lg" style="max-width:900px;margin-bottom:16px">China Dental Travel connects overseas patients with vetted, high-quality dental care in China — and turns necessary treatment into an extraordinary trip. We were founded by a dental group, ${esc(SITE.organization.founderClinic)}, which remains the largest operator in the network today with ${CLINICS.length} clinics across ${regionCount} regions and 16 years of clinical heritage. But the platform itself is deliberately larger than any one group: independently operated clinics join on the same licensing, clinical and aftercare standards, and every clinic holds a valid Chinese Medical Institution License, verified before we list it.</p>
+    <p class="lead-lg" style="max-width:900px;margin-bottom:16px">The reason to organise it as a network is practical. International dental treatment rarely goes wrong because the medicine is wrong — it goes wrong because appointments clash across cities, because a complex case needs a discipline the first clinic does not have, or because nobody is accountable when a plan changes. ${CLINICS.length} clinics in ${regionCount} regions, coordinated by one English-speaking team, removes those failure points. You get the density of a large group with the accountability of a single point of contact.</p>
     <div class="stat-row" style="justify-content:flex-start;gap:48px">
       <div class="stat"><strong>16+</strong><span>Years heritage</span></div>
-      <div class="stat"><strong>20+</strong><span>Clinic locations</span></div>
-      <div class="stat"><strong>6</strong><span>Destinations</span></div>
+      <div class="stat"><strong>${CLINICS.length}</strong><span>Clinics in network</span></div>
+      <div class="stat"><strong>${regionCount}</strong><span>Regions</span></div>
+      <div class="stat"><strong>${cities.length}</strong><span>Destinations</span></div>
     </div>
   </div></section>
 
@@ -808,7 +1005,7 @@ function buildAbout() {
   <section class="section-soft" style="padding:40px 0"><div class="container">
     <div class="section-head" style="margin-bottom:26px"><div class="eyebrow">Our promise</div><h2 style="margin-bottom:6px">What you can count on</h2></div>
     <div class="grid grid-3">
-      <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">Verified clinics</h3><p style="color:var(--muted);font-size:14px">Licensed medical institutions only. No exceptions.</p></div>
+      <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">Vetted clinics</h3><p style="color:var(--muted);font-size:14px">Licensed medical institutions only. We review credentials before listing, not after.</p></div>
       <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">Transparent prices</h3><p style="color:var(--muted);font-size:14px">Indicative ranges up front; confirmed quotes before treatment.</p></div>
       <div class="card" style="padding:18px 20px"><h3 style="margin-bottom:4px">English support</h3><p style="color:var(--muted);font-size:14px">Bilingual coordination from first message to aftercare.</p></div>
     </div>
@@ -826,7 +1023,7 @@ function buildAbout() {
       "jobTitle": m.role
     }))
   };
-  return page({ title: "About Us — Dental Tourism in China", description: "Meet the China Dental Travel team and our founding clinic Jingzhou Dental Group — senior professionals coordinating affordable, verified dental care for international patients.", body, jsonld, active: "/about/", path: "/about/" });
+  return page({ title: "About Us — Dental Tourism in China", description: "China Dental Travel is a clinic network and coordination platform for international dental patients — " + CLINICS.length + " vetted clinics across " + regionCount + " regions, coordinated by one English-speaking team.", body, jsonld, active: "/about/", path: "/about/" });
 }
 
 /* ---- Contact ---- */
@@ -1243,11 +1440,6 @@ async function build() {
     await ph("city-" + c.slug + "-hero", c.name, c.tagline, { w: 1400, h: 700, c1: "#004a99", c2: "#2e9e5b" });
     (c.tourism.highlights || []).forEach((h, i) =>
       ph("city-" + c.slug + "-hl-" + i, h.name, "", { w: 400, h: 400, c1: "#004a99", c2: "#2e9e5b" }));
-    (c.institutions || []).forEach((inst, ii) => {
-      ph("inst-" + c.slug + "-" + ii, inst.nameZh || inst.name, "", { w: 600, h: 360, c1: "#0066cc", c2: "#1f7a44" });
-      (inst.doctors || []).forEach((doc, j) =>
-        ph("doc-" + c.slug + "-" + ii + "-" + j, doc.name, "", { w: 200, h: 200, c1: "#2e9e5b", c2: "#0066cc" }));
-    });
   }
 
   // pages
@@ -1256,6 +1448,7 @@ async function build() {
   for (const s of services) await writeFile(path.join(DIST, "services", s.slug, "index.html"), buildService(s));
   await writeFile(path.join(DIST, "destinations", "index.html"), buildDestinationsIndex());
   for (const c of cities) await writeFile(path.join(DIST, "destinations", c.slug, "index.html"), await buildCity(c));
+  await writeFile(path.join(DIST, "network", "index.html"), buildNetwork());
   await writeFile(path.join(DIST, "about", "index.html"), buildAbout());
   await writeFile(path.join(DIST, "contact", "index.html"), buildContact());
   await writeFile(path.join(DIST, "faq", "index.html"), buildFaq());
@@ -1279,7 +1472,7 @@ async function build() {
   }));
 
   // sitemap
-  const urls = ["/", "/services/", "/destinations/", "/pricing/", "/blog/", "/about/", "/contact/", "/faq/",
+  const urls = ["/", "/services/", "/network/", "/destinations/", "/pricing/", "/blog/", "/about/", "/contact/", "/faq/",
     ...services.map((s) => "/services/" + s.slug + "/"),
     ...cities.map((c) => "/destinations/" + c.slug + "/"),
     ...posts.map((p) => "/blog/" + p.slug + "/")];
@@ -1297,7 +1490,7 @@ ${urls.map((u) => `  <url><loc>${esc(SITE.domain)}${u}</loc><changefreq>weekly</
   await copyDir(path.join(ROOT, "admin"), path.join(DIST, "admin"));
 
   console.log("✅ Build complete → " + DIST);
-  console.log("   Pages: home, services(" + services.length + "), destinations(" + cities.length + "), blog(" + posts.length + "), about, contact, faq, 404");
+  console.log("   Pages: home, services(" + services.length + "), network(" + CLINICS.length + " clinics/" + NETWORK_REGIONS.filter((r) => (r.clinics || []).some((c) => c.status === "operating")).length + " regions), destinations(" + cities.length + "), blog(" + posts.length + "), about, contact, faq, 404");
   console.log("   Sitemap + robots.txt + feed.xml written.");
 }
 

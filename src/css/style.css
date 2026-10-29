@@ -198,17 +198,66 @@ img.protect, .media.protect img { -webkit-user-select: none; user-select: none; 
 .itinerary li h4 { margin: 0 0 2px; }
 .itinerary li p { margin: 0; color: var(--muted); font-size: 14px; }
 
-.institution { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin-bottom: 22px; box-shadow: var(--shadow-sm); }
-.institution .head { padding: 20px 22px; background: var(--blue-light); }
-.institution .head h4 { margin: 0; font-size: 1.15rem; }
-.institution .head .addr { color: var(--muted); font-size: 14px; }
-.institution .body { padding: 20px 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-.institution .desc { color: var(--muted); font-size: 15px; }
-.doctor { display: flex; gap: 14px; align-items: center; padding: 12px; border: 1px solid var(--line); border-radius: 12px; }
-.doctor .media { width: 64px; height: 64px; border-radius: 50%; flex: 0 0 64px; }
-.doctor h5 { margin: 0; font-size: 1rem; }
-.doctor .role { color: var(--green); font-size: 13px; font-weight: 600; }
-.doctor .bio { color: var(--muted); font-size: 13px; margin: 4px 0 0; }
+/* ---------- Clinic network（门店网点） ---------- */
+.clinic-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.clinic-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px 22px; box-shadow: var(--shadow-sm); transition: .2s;
+  display: flex; flex-direction: column;
+}
+.clinic-card:hover { box-shadow: var(--shadow); transform: translateY(-3px); }
+.clinic-card.flagship { border-color: #b8d9f5; background: linear-gradient(180deg, #f5fbff 0%, #fff 42%); }
+.clinic-card-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
+.clinic-brand {
+  display: inline-block; background: var(--blue-light); color: var(--blue-dark);
+  font-size: 11px; font-weight: 700; letter-spacing: .4px; padding: 3px 10px;
+  border-radius: 999px; text-transform: uppercase;
+}
+.clinic-flag {
+  font-size: 11px; font-weight: 700; letter-spacing: .4px; padding: 3px 10px;
+  border-radius: 999px; background: var(--green); color: #fff;
+}
+.clinic-card h4 { margin: 0 0 4px; font-size: 1.06rem; }
+.clinic-city { color: var(--muted); font-size: 14px; }
+.clinic-focus-list { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.clinic-focus {
+  font-size: 12px; color: var(--muted); background: var(--bg-soft);
+  border: 1px solid var(--line); border-radius: 6px; padding: 3px 9px;
+}
+.clinic-note { color: var(--muted); font-size: 13px; margin: 12px 0 0; }
+
+/* 区域分组 */
+.net-region { margin-bottom: 42px; scroll-margin-top: 96px; }
+.net-region-head { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 8px; }
+.net-region-head h3 { margin: 0; font-size: 1.35rem; }
+.net-region-zh { color: var(--muted); font-size: 14px; margin-top: 3px; }
+.net-region-note { color: var(--muted); font-size: 15px; margin: 0 0 18px; max-width: 860px; }
+
+/* 区域跳转条 */
+.net-jump { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.net-jump a {
+  display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+  background: #fff; border: 1px solid var(--line); border-radius: 999px;
+  padding: 8px 16px; font-size: 14px; color: var(--ink); transition: .2s;
+}
+.net-jump a:hover { border-color: var(--blue); color: var(--blue-dark); box-shadow: var(--shadow-sm); }
+.net-jump a span {
+  background: var(--blue); color: #fff; border-radius: 999px;
+  min-width: 22px; height: 22px; display: inline-grid; place-items: center;
+  font-size: 12px; font-weight: 700; padding: 0 6px;
+}
+
+/* 首页网点预览 */
+.net-preview { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+.net-preview-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 20px 14px; text-decoration: none; color: inherit; transition: .2s;
+}
+.net-preview-item:hover { border-color: var(--blue); box-shadow: var(--shadow-sm); transform: translateY(-3px); }
+.net-preview-zh { font-size: 1.15rem; font-weight: 700; color: var(--ink); }
+.net-preview-n { font-size: 1.9rem; font-weight: 800; color: var(--blue); line-height: 1.1; }
+.net-preview-en { font-size: 12px; color: var(--muted); text-align: center; }
 
 /* ---------- Price table ---------- */
 .price-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
@@ -346,6 +395,8 @@ img { -webkit-user-drag: none; user-drag: none; }
   .blog-grid { grid-template-columns: repeat(2, 1fr); }
   .blog-grid.related { grid-template-columns: repeat(2, 1fr); }
   .post-layout { grid-template-columns: minmax(0, 1fr) 210px; gap: 28px; }
+  .clinic-grid { grid-template-columns: repeat(2, 1fr); }
+  .net-preview { grid-template-columns: repeat(3, 1fr); }
 }
 
 /* Collapse the long nav into a hamburger well before items crowd the header */
@@ -363,14 +414,12 @@ img { -webkit-user-drag: none; user-drag: none; }
   .post-layout { grid-template-columns: 1fr; gap: 18px; }
   .post-toc { position: static; border-left: 0; border-top: 1px solid var(--line); padding: 16px 0 0; }
   .post-cover img { height: 260px; }
-  .institution .body { grid-template-columns: 1fr; }
-  .institution .head { padding: 16px 18px; }
-  .institution .body { padding: 16px 18px; }
   .highlight-item .media { width: 90px; height: 90px; flex-basis: 90px; }
   .section-head { margin-bottom: 30px; }
   .detail-hero { padding: 32px 0 36px; }
   .block { padding: 42px 0; }
   section { padding: 54px 0; }
+  .net-preview { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 680px) {
   .header-cta .btn { display: none; }
@@ -396,6 +445,8 @@ img { -webkit-user-drag: none; user-drag: none; }
   .highlight-item .media { width: 100%; height: 160px; flex-basis: auto; }
   .itinerary li { padding-left: 48px; margin-left: 12px; }
   .itinerary li::before { left: -17px; width: 32px; height: 32px; }
-  .doctor { flex-direction: row; align-items: center; }
+  .clinic-grid { grid-template-columns: 1fr; }
+  .net-preview { grid-template-columns: 1fr 1fr; }
+  .clinic-card { padding: 16px 18px; }
   .footer-bottom { flex-direction: column; align-items: center; text-align: center; }
 }
