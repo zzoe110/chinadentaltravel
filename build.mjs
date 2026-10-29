@@ -4,7 +4,9 @@
    Output: ./dist  (deploy to CloudFlare Pages, build=node build.mjs)
    ========================================================= */
 import fs from "node:fs/promises";
+import fsSync from "node:fs";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { encodePNG, encodeICO, drawIcon, iconSVG } from "./lib/png.mjs";
 
@@ -268,6 +270,18 @@ function formatDate(iso) {
   return `${months[parseInt(m[2], 10) - 1]} ${parseInt(m[3], 10)}, ${m[1]}`;
 }
 
+/* ---------- 静态资源版本指纹 ----------
+   CloudFlare 会缓存 /assets/css/style.css，样式改版后回访用户仍拿到旧 CSS
+   （实测：网点页上线后浏览器计算样式 display:block，grid 规则没生效）。
+   用 CSS/JS 源文件内容哈希做查询串，内容变则 URL 变，强制刷新缓存。 */
+const ASSET_V = (() => {
+  const h = crypto.createHash("sha256");
+  for (const f of [path.join(SRC, "css", "style.css"), path.join(SRC, "js", "main.js")]) {
+    try { h.update(fsSync.readFileSync(f)); } catch { /* 文件不存在则跳过 */ }
+  }
+  return h.digest("hex").slice(0, 10);
+})();
+
 /* ---------- data ---------- */
 const siteData = await readJSON(path.join(CONTENT, "site.json"));
 const SITE = siteData;
@@ -398,7 +412,7 @@ function page({ title, description, body, jsonld, active, path, ogImage, extraHe
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/style.css">
+  <link rel="stylesheet" href="/assets/css/style.css?v=${ASSET_V}">
   ${jsonld ? `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>` : ""}
   ${extraHead}
 </head>
@@ -406,7 +420,7 @@ function page({ title, description, body, jsonld, active, path, ogImage, extraHe
   ${header(active)}
   <main>${body}</main>
   ${footer()}
-  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/main.js?v=${ASSET_V}"></script>
 </body>
 </html>`;
 }
